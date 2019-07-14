@@ -1,2 +1,2 @@
-# JLab_Analysis
+# CLAS12Analysis
 Jlab analysis codes 
