@@ -30,7 +30,7 @@ public class DvcsEvent {
 
     public DvcsEvent() {
       // This constructor no parameter.
-      System.out.println("setting the default DVCS event for hadron :" + MNUC );
+      //System.out.println("setting the default DVCS event for hadron :" + MNUC );
    }
     public DvcsEvent(double mass) {
       // This constructor no parameter.
@@ -182,14 +182,9 @@ public class DvcsEvent {
    public double PhiPlane(){
        double Phi;
         Vector3 leptonicPlane = new Vector3();
-            leptonicPlane.copy(vBeam.vect());
-            leptonicPlane = leptonicPlane.cross(velectron.vect());
+            leptonicPlane.copy(vBeam.vect().cross(velectron.vect()));
         Vector3 hadronicPlane = new Vector3();
-            hadronicPlane.copy(vBeam.vect());
-            hadronicPlane = hadronicPlane.cross(vphoton.vect());
-        //System.out.println("vBeam " + this.vBeam.vect().x() + ", " + this.vBeam.vect().y() + ", " + this.vBeam.vect().z());
-        //System.out.println("vHadron " + this.vhadron.vect().x() + ", " + this.vhadron.vect().y() + ", " + this.vhadron.vect().z());
-      // System.out.println("vphoton " + this.vphoton.vect().x() + ", " + this.vphoton.vect().y() + ", " + this.vphoton.vect().z());
+            hadronicPlane.copy(vhadron.vect().cross(vphoton.vect()));
         Phi = Math.toDegrees(leptonicPlane.angle(hadronicPlane));
        //System.out.println("Angle = " + Phi);
        return Phi;
