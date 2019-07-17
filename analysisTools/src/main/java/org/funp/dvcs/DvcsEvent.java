@@ -130,43 +130,43 @@ public class DvcsEvent {
        return tmp;
 
    }
-   public LorentzVector DVCSmissX(){
-       LorentzVector  tmp = new LorentzVector();
-       tmp.copy(vBeam);
-       tmp.add(vTarget);
-       tmp.sub(velectron);
-       tmp.sub(vphoton);
-       return tmp;
-
-   }
-   public LorentzVector ehehgX(){
-       LorentzVector  tmp = new LorentzVector();
-       tmp.copy(vBeam);
-       tmp.add(vTarget);
-       tmp.sub(velectron);
-       tmp.sub(vphoton);
-       tmp.sub(vhadron);
-       return tmp;
-   }
-   public LorentzVector ehehX(){
-       LorentzVector  tmp = new LorentzVector();
-       tmp.copy(vBeam);
-       tmp.add(vTarget);
-       tmp.sub(velectron);
-       tmp.sub(vhadron);
-       return tmp;
-   }
+   // public LorentzVector DVCSmissX(){
+   //     LorentzVector  tmp = new LorentzVector();
+   //     tmp.copy(vBeam);
+   //     tmp.add(vTarget);
+   //     tmp.sub(velectron);
+   //     tmp.sub(vphoton);
+   //     return tmp;
+   //
+   // }
+   // public LorentzVector ehehgX(){
+   //     LorentzVector  tmp = new LorentzVector();
+   //     tmp.copy(vBeam);
+   //     tmp.add(vTarget);
+   //     tmp.sub(velectron);
+   //     tmp.sub(vphoton);
+   //     tmp.sub(vhadron);
+   //     return tmp;
+   // }
+   // public LorentzVector ehehX(){
+   //     LorentzVector  tmp = new LorentzVector();
+   //     tmp.copy(vBeam);
+   //     tmp.add(vTarget);
+   //     tmp.sub(velectron);
+   //     tmp.sub(vhadron);
+   //     return tmp;
+   // }
    public double MM2(){
-       return this.X("egh").mass2();
+       return this.X("ehg").mass2();
    }
    public double Mpx(){
-       return this.X("egh").px();
+       return this.X("ehg").px();
    }
    public double Mpy(){
-       return this.X("egh").py();
+       return this.X("ehg").py();
    }
    public double Mpz(){
-       return this.X("egh").pz();
+       return this.X("ehg").pz();
    }
    public boolean DVCScut(){
        boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1);
@@ -176,31 +176,36 @@ public class DvcsEvent {
        return (-this.Q().mass2())/(2*0.938*(this.vBeam.p()-this.velectron.p()));
    }
    public double DTheta(){
-        LorentzVector temp = new LorentzVector();
-        temp.copy(this.X("eh"));
-    return Math.toDegrees(vphoton.vect().angle(temp.vect()));
+    //     LorentzVector temp = new LorentzVector();
+    //     temp.copy(this.X("eh"));
+    // return Math.toDegrees(vphoton.vect().angle(temp.vect()));
+    return Math.toDegrees(vphoton.vect().angle(this.X("eh").vect()));
    }
    public double DPhi(){
-        LorentzVector temp = new LorentzVector();
-        temp.copy(this.X("eh"));
-    return vphoton.vect().phi() - temp.vect().phi();
+    //     LorentzVector temp = new LorentzVector();
+    //     temp.copy(this.X("eh"));
+    // return vphoton.vect().phi() - temp.vect().phi();
+    return vphoton.vect().phi() - this.X("eh").vect().phi();
    }
    public double PhiPlane(){
        double Phi;
-        Vector3 leptonicPlane = new Vector3();
-            leptonicPlane.copy(vBeam.vect().cross(velectron.vect()));
-        Vector3 hadronicPlane = new Vector3();
-            hadronicPlane.copy(vhadron.vect().cross(vphoton.vect()));
-        Phi = Math.toDegrees(leptonicPlane.angle(hadronicPlane));
+       Vector3 leptonicPlane=vBeam.vect().cross(velectron.vect());
+       Vector3 hadronicPlane=vhadron.vect().cross(vphoton.vect());
+       Phi = Math.toDegrees(leptonicPlane.angle(hadronicPlane));
+        // Vector3 leptonicPlane = new Vector3();
+        //     leptonicPlane.copy(vBeam.vect().cross(velectron.vect()));
+        // Vector3 hadronicPlane = new Vector3();
+        //     hadronicPlane.copy(vhadron.vect().cross(vphoton.vect()));
+        // Phi = Math.toDegrees(leptonicPlane.angle(hadronicPlane));
        //System.out.println("Angle = " + Phi);
        return Phi;
    }
     public double deltaPhiPlane(){
         double deltaphi;
-        LorentzVector tmp=new LorentzVector();
-        tmp.copy(vBeam);
-        tmp.sub(velectron);
-        Vector3 norm_Pro_VPho = (vhadron.vect().cross(tmp.vect()));
+        // LorentzVector tmp=new LorentzVector();
+        // tmp.copy(vBeam);
+        // tmp.sub(velectron);
+        Vector3 norm_Pro_VPho = (vhadron.vect().cross(Q().vect()));
         Vector3 norm_Pro_Pho = (vhadron.vect().cross(vphoton.vect()));
         deltaphi = Math.toDegrees(norm_Pro_Pho.angle(norm_Pro_VPho));
         if(norm_Pro_VPho.dot(vphoton.vect()) < 0 ) deltaphi = -1*deltaphi;
@@ -210,13 +215,19 @@ public class DvcsEvent {
     //could be ehg or eg eh
     public LorentzVector X(String listpart){
       //System.out.println(listpart);
-      String newlistpart=Stream.of(listpart).sorted(Comparator.comparingInt(o -> Character.toLowerCase(o.charAt(0)))).collect(Collectors.joining());
-        //System.out.println(newlistpart);
+      //String newlistpart=Stream.of("cda").sorted(Comparator.comparingInt(o -> Character.toLowerCase(o.charAt(0)))).collect(Collectors.joining());
+
+
+      listpart = Stream.of( listpart.split("") )
+                      .sorted()
+                      .collect(Collectors.joining());
+
+        //System.out.println(listpart);
 
         LorentzVector  tmp = new LorentzVector();
-        tmp.copy(vBeam);
-        tmp.add(vTarget);
-        tmp.sub(velectron);
+        tmp.copy(W());
+        // tmp.add(vTarget);
+        // tmp.sub(velectron);
         if(listpart.equals("egh")){
           tmp.sub(vphoton);
           tmp.sub(vhadron);
