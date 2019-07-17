@@ -9,6 +9,11 @@ import org.jlab.groot.graphics.*;
 import org.jlab.jnp.physics.*;
 import org.jlab.jnp.reader.*;
 
+import java.util.Comparator;
+//import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class DvcsEvent {
     public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,10.2,10.2);
     public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,1.878);
@@ -27,6 +32,7 @@ public class DvcsEvent {
     int ng=-1;
     int nd=-1;
     boolean FoundEvent= false;
+    boolean NewEvent=false;
 
     public DvcsEvent() {
       // This constructor no parameter.
@@ -107,7 +113,7 @@ public class DvcsEvent {
             FoundEvent=true;
           }
        }
-
+       NewEvent=true;
        return FoundEvent;
    }
    public LorentzVector W(){
@@ -151,16 +157,16 @@ public class DvcsEvent {
        return tmp;
    }
    public double MM2(){
-       return this.DVCSmissX().mass2();
+       return this.X("egh").mass2();
    }
    public double Mpx(){
-       return this.DVCSmissX().px();
+       return this.X("egh").px();
    }
    public double Mpy(){
-       return this.DVCSmissX().py();
+       return this.X("egh").py();
    }
    public double Mpz(){
-       return this.DVCSmissX().pz();
+       return this.X("egh").pz();
    }
    public boolean DVCScut(){
        boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1);
@@ -171,12 +177,12 @@ public class DvcsEvent {
    }
    public double DTheta(){
         LorentzVector temp = new LorentzVector();
-        temp.copy(this.ehehX());
+        temp.copy(this.X("eh"));
     return Math.toDegrees(vphoton.vect().angle(temp.vect()));
    }
    public double DPhi(){
         LorentzVector temp = new LorentzVector();
-        temp.copy(this.ehehX());
+        temp.copy(this.X("eh"));
     return vphoton.vect().phi() - temp.vect().phi();
    }
    public double PhiPlane(){
@@ -199,5 +205,32 @@ public class DvcsEvent {
         deltaphi = Math.toDegrees(norm_Pro_Pho.angle(norm_Pro_VPho));
         if(norm_Pro_VPho.dot(vphoton.vect()) < 0 ) deltaphi = -1*deltaphi;
         return deltaphi;
+    }
+    //this function returns the missing vector for a given list of possible particles in a dvcs events
+    //could be ehg or eg eh
+    public LorentzVector X(String listpart){
+      //System.out.println(listpart);
+      String newlistpart=Stream.of(listpart).sorted(Comparator.comparingInt(o -> Character.toLowerCase(o.charAt(0)))).collect(Collectors.joining());
+        //System.out.println(newlistpart);
+
+        LorentzVector  tmp = new LorentzVector();
+        tmp.copy(vBeam);
+        tmp.add(vTarget);
+        tmp.sub(velectron);
+        if(listpart.equals("egh")){
+          tmp.sub(vphoton);
+          tmp.sub(vhadron);
+        }
+        else if(listpart.equals("eg")){
+          tmp.sub(vphoton);
+
+        }
+        else if(listpart.equals("eh")){
+          tmp.sub(vhadron);
+        }
+        else {
+          System.out.println(listpart+" combination of particle to calculate the missing particle is not supported, use e,g,h" );
+        }
+      return tmp;
     }
 }
