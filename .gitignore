@@ -13,3 +13,4 @@ analysisTools/.project
 analysisTools/.classpath
 .DS_Store
 *~
+*.png
