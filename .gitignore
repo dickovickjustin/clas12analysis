@@ -1,4 +1,4 @@
-analysisTools/.settings/
+analysisTools/.settings/*
 target/
 pom.xml.tag
 pom.xml.releaseBackup
