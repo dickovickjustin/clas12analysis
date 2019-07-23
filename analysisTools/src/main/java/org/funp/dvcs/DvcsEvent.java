@@ -14,6 +14,17 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+//
+//import org.jlab.io.base.DataEvent;
+//import org.jlab.io.base.DataBank;
+
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+
+
 public class DvcsEvent {
     public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,10.2,10.2);
     public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,1.878);
@@ -116,6 +127,26 @@ public class DvcsEvent {
        NewEvent=true;
        return FoundEvent;
    }
+   /**
+   * @param fromBank the bank containing the index variable
+   * @param idxVarName the name of the index variable
+   * @return map with keys being the index in toBank and values the indices in fromBank
+   */
+  public static Map<Integer,List<Integer>> loadMapByIndex(
+           Bank fromBank,
+           String idxVarName) {
+            
+       Map<Integer,List<Integer>> map=new HashMap<Integer,List<Integer>>();
+       if (fromBank!=null) {
+
+           for (int iFrom=0; iFrom<fromBank.getRows(); iFrom++) {
+               final int iTo = fromBank.getInt(idxVarName,iFrom);
+               if (!map.containsKey(iTo)) map.put(iTo,new ArrayList<Integer>());
+               map.get(iTo).add(iFrom);
+           }
+       }
+       return map;
+   }
    public LorentzVector W(){
        LorentzVector  tmp = new LorentzVector();
        tmp.copy(vBeam);
@@ -205,11 +236,24 @@ public class DvcsEvent {
         // LorentzVector tmp=new LorentzVector();
         // tmp.copy(vBeam);
         // tmp.sub(velectron);
-        Vector3 norm_Pro_VPho = (vhadron.vect().cross(Q().vect()));
-        Vector3 norm_Pro_Pho = (vhadron.vect().cross(vphoton.vect()));
-        deltaphi = Math.toDegrees(norm_Pro_Pho.angle(norm_Pro_VPho));
-        if(norm_Pro_VPho.dot(vphoton.vect()) < 0 ) deltaphi = -1*deltaphi;
+        Vector3 norm_Had_VPho = (vhadron.vect().cross(Q().vect()));
+        Vector3 norm_Had_Pho = (vhadron.vect().cross(vphoton.vect()));
+        deltaphi = Math.toDegrees(norm_Had_Pho.angle(norm_Had_VPho));
+        if(norm_Had_VPho.dot(vphoton.vect()) < 0 ) deltaphi = -1*deltaphi;
         return deltaphi;
+    }
+    public double deltaPhiPlane2(){
+            double deltaphiplane;
+            Vector3 norm_Had_VPho = (vhadron.vect().cross(this.Q().vect()));
+            Vector3 norm_VPho_Pho = (this.Q().vect().cross(vphoton.vect()));
+            deltaphiplane = Math.toDegrees(norm_Had_VPho.angle(norm_VPho_Pho));
+            if(norm_Had_VPho.dot(vphoton.vect()) < 0 ) deltaphiplane = -1*deltaphiplane;
+        return deltaphiplane;
+    }
+    public double coneangle(){
+        LorentzVector temp = new LorentzVector();
+        temp.copy(this.X("eh"));
+        return Math.toDegrees(this.vphoton.vect().angle(temp.vect()));
     }
     //this function returns the missing vector for a given list of possible particles in a dvcs events
     //could be ehg or eg eh
