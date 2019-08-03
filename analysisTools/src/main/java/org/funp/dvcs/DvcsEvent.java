@@ -135,7 +135,7 @@ public class DvcsEvent {
   public static Map<Integer,List<Integer>> loadMapByIndex(
            Bank fromBank,
            String idxVarName) {
-            
+
        Map<Integer,List<Integer>> map=new HashMap<Integer,List<Integer>>();
        if (fromBank!=null) {
 
