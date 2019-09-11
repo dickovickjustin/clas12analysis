@@ -187,21 +187,21 @@ public class DvcsEvent {
    //     tmp.sub(vhadron);
    //     return tmp;
    // }
-   public double MM2(){
-       return this.X("ehg").mass2();
-   }
-   public double Mp(){
-       return this.X("ehg").p();
-   }
-   public double Mpx(){
-       return this.X("ehg").px();
-   }
-   public double Mpy(){
-       return this.X("ehg").py();
-   }
-   public double Mpz(){
-       return this.X("ehg").pz();
-   }
+   //public double MM2(){
+    // return this.X("ehg").mass2();
+   //}
+   //public double Mp(){
+  //     return this.X("ehg").p();
+   //}
+   //public double Mpx(){
+    //   return this.X("ehg").px();
+   //}
+   //public double Mpy(){
+    //   return this.X("ehg").py();
+   //}
+   //public double Mpz(){
+    //   return this.X("ehg").pz();
+   //}
    public boolean DVCScut(){
        boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1);
        return cut;
