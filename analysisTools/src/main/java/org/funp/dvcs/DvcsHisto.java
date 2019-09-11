@@ -14,51 +14,57 @@ import org.jlab.groot.ui.TCanvas;
 //import org.funp.dvcs.DvcsEvent;;
 
 public class DvcsHisto {
-  public H1F W;
-  public H1F Q2;
-  public H1F MMass;
-  public H1F MMom;
-  public H1F MMomx;
-  public H1F MMomy;
-  public H1F MMomz;
+  public H1F W; //invariant mass of e target -> e' X
+  public H1F Q2;//Momentum transfer squared  of e-e'
   public H2F WvsQ2;
-  public H2F ThvsPhi;
   public H2F Q2vsXbj;
-  public H2F MMvsMpz;
-  public H2F MpxvsMpz;
-  public H1F ThetaHist;
-  public H1F DThetaHist ;
-  public H1F MissThetaHist;
-  public H1F PhiPlaneHist ;
-  public H1F DPhiHist ;
-  public H1F DeltaPhiPlaneHist;
-  public H1F DeltaPhiPlaneMattHist;
-  public H1F DeltaPhiPlaneHistNC;
-  public H1F DeltaPhiPlaneMattHistNC;
-  public H1F ConeAngleHist;
-  public H1F DeltaPhiPlaneHistDC;
-  public H1F DeltaPhiPlaneMattHistDC;
-  public H1F DeltaPhiPlaneHistAC ;
-  public H1F DeltaPhiPlaneMattHistAC;
+  //Missing quantities
+  public H1F MMass;// missing mass of a complete DVCS final state e hadron gamma
+  public H1F MMom;// missing mom of a complete DVCS final state e hadron gamma
+  public H1F MMomx;// missing px of a complete DVCS final state e hadron gamma
+  public H1F MMomy;// missing py of a complete DVCS final state e hadron gamma
+  public H1F MMomz;// missing pz of a complete DVCS final state e hadron gamma
 
-  public H1F edgXmissingE;
-  public H1F edgXmissingM2 ;
-  public H1F edgXmissingP ;
-  public H1F edXmissingM2;
-  public H1F egXmissingM2;
+  public H1F edgXmissingE; // missing mass of a complete DVCS final state e hadron gamma
+  public H1F edgXmissingM2 ; // missing mass of a complete DVCS final state e hadron gamma
+  public H1F edgXmissingP ; // missing mass of a complete DVCS final state e hadron gamma
 
-  public H2F coneanglevsedgXM2;
-  public H2F coneanglevsedXM2;
+  public H1F edXmissingM2; // missing mass of hadron electron final state (to be compared with gamma)
+  public H1F egXmissingM2; // missing mass of gamma electron final state (to be compared with hadron)
+
+
+  public H2F ThvsPhi;//Theta vs phi for hadron
+
+  //public H2F MMvsMpz;
+  //public H2F MpxvsMpz;
+
+  public H1F ThetaHist;//theta gamma
+  public H1F DAngleGammaHist ; //angle between gamma vector and missing hadron+e vector
+  public H1F ConeAngleHist;//angle between gamma vector and missing hadron+e vector
+  public H1F MissThetaHist;//theta missing hadron+e vector
+  public H1F PhiPlaneHist ; //angle between electrons plane and hadron/gamma plane
+  public H1F DPhiHist ;//phi gamma minus phi missing hadron+e vector
+  public H1F DeltaPhiPlaneHist; //angle planes Q2/hadron and gamma/hadrom
+  public H1F DeltaPhiPlaneMattHist;//angle planes Q2/hadron and Q2/gamma
+
+  public H2F coneanglevsedgXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehgX
+  public H2F coneanglevsedXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehX
+
 
   public DvcsHisto() {
     W= new H1F("W" ,100, 0, 10.0);
     W.setTitleX("W [GeV]");
     Q2 = new H1F("Q2",100, 0.1, 4.0);
     Q2.setTitleX("Q^2 [GeV/c^2]");
+    WvsQ2 = new H2F("W vs Q2", "W vs Q2", 100,0,7,100,0,10);
+    WvsQ2.setTitleX("W [GeV]");
+    WvsQ2.setTitleY("Q^2 [GeV/c^2]");
+    Q2vsXbj = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,0,10,100,0,1);
+    Q2vsXbj.setTitleX("Q^2 [GeV/c^2]");
+    Q2vsXbj.setTitleY("Xbj");
+
     MMass = new H1F("MMass",100,-30,30);
     MMass.setTitleX("Missing Mass Squared");
-
-
     MMom = new H1F("MMass",100,-30,30);
     MMom.setTitleX("Missing Momentum");
     MMomx = new H1F("MMass",100,-10,10);
@@ -67,25 +73,35 @@ public class DvcsHisto {
     MMomy.setTitleX("Missing Y Momentum");
     MMomz = new H1F("MMass",100,-10,15);
     MMomz.setTitleX("Missing Z Momentum");
-    WvsQ2 = new H2F("W vs Q2", "W vs Q2", 100,0,7,100,0,10);
-    WvsQ2.setTitleX("W [GeV]");
-    WvsQ2.setTitleY("Q^2 [GeV/c^2]");
+
+    edgXmissingE = new H1F("edgXmissingE",100,-30,30);
+    edgXmissingE.setTitle("eDGammaX Missing Energy");
+    edgXmissingM2 = new H1F("edgXmissingM2",100,-30,30);
+    edgXmissingM2.setTitle("eDGammaX Missing Mass2");
+    edgXmissingP = new H1F("edgXmissingP",100,0,30);
+    edgXmissingP.setTitle("eDGammaX Missing Momentum");
+
+    edXmissingM2 = new H1F("edXmissingM2",100,-30,30);
+    edXmissingM2.setTitle("eDX Missing Mass2");
+    egXmissingM2 = new H1F("egXmissingM2",100,-30,30);
+    egXmissingM2.setTitle("eGammaX Missing Mass2");
+
     ThvsPhi = new H2F("Theta vs Phi","Theta vs Phi",100,-180,180,100,0,180);
     ThvsPhi.setTitleX("Phi [Degrees]");
     ThvsPhi.setTitleY("Theta [Degrees]");
-    Q2vsXbj = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,0,10,100,0,1);
-    Q2vsXbj.setTitleX("Q^2 [GeV/c^2]");
-    Q2vsXbj.setTitleY("Xbj");
-    MMvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
-    MMvsMpz.setTitleX("Missing Mass");
-    MMvsMpz.setTitleY("Missing Z Momentum");
-    MpxvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
-    MpxvsMpz.setTitleX("Missing X Momentum");
-    MpxvsMpz.setTitleY("Missing Z Momentum");
+
+    //MMvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
+    //MMvsMpz.setTitleX("Missing Mass");
+    //MMvsMpz.setTitleY("Missing Z Momentum");
+    //MpxvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
+    //MpxvsMpz.setTitleX("Missing X Momentum");
+    //MpxvsMpz.setTitleY("Missing Z Momentum");
     ThetaHist = new H1F("ThetaHist",100,0,50);
     ThetaHist.setTitle("Photon Theta");
-    DThetaHist = new H1F("DThetaHist",100,0,50);
-    DThetaHist.setTitle("DTheta");
+    DAngleGammaHist = new H1F("DAngleGammaHist",100,0,50);
+    DAngleGammaHist.setTitle("Angle between gamma and missing eDX");
+    ConeAngleHist = new H1F("ConeAngleHist",100,-15,180);
+    ConeAngleHist.setTitle("Cone Angle");
     MissThetaHist = new H1F("MissThetaHist",100,0,180);
     MissThetaHist.setTitle("Missing Photon Theta");
     PhiPlaneHist = new H1F("PhiPlaneHist",100,0,180);
@@ -94,26 +110,9 @@ public class DvcsHisto {
     DPhiHist.setTitle("DPhi");
     DeltaPhiPlaneHist = new H1F("DeltaPhiPlane",100,0,360);
     DeltaPhiPlaneHist.setTitle("Delta Phi Plane");
-
     DeltaPhiPlaneMattHist = new H1F("DeltaPhiPlane",100,-50,50);
     DeltaPhiPlaneMattHist.setTitle("Delta Phi Plane Hattawy");
-    DeltaPhiPlaneHistNC = new H1F("DeltaPhiPlane",100,-50,50);
-
-    ConeAngleHist = new H1F("ConeAngleHist",100,-15,180);
-    ConeAngleHist.setTitle("Cone Angle");
-    DeltaPhiPlaneHistDC = new H1F("DeltaPhiPlane",100,-50,50);
-
-
-    edgXmissingE = new H1F("edgXmissingE",100,-30,30);
-    edgXmissingE.setTitle("eDGammaX Missing Energy");
-    edgXmissingM2 = new H1F("edgXmissingM2",100,-30,30);
-    edgXmissingM2.setTitle("eDGammaX Missing Mass2");
-    edgXmissingP = new H1F("edgXmissingP",100,0,30);
-    edgXmissingP.setTitle("eDGammaX Missing Momentum");
-    edXmissingM2 = new H1F("edXmissingM2",100,-30,30);
-    edXmissingM2.setTitle("eDX Missing Mass2");
-    egXmissingM2 = new H1F("egXmissingM2",100,-30,30);
-    egXmissingM2.setTitle("eGammaX Missing Mass2");
+  
 
     coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,180,100,-30,30);
     coneanglevsedgXM2.setTitleX("Cone Angle (deg.)");
@@ -127,57 +126,40 @@ public class DvcsHisto {
   public void fillBasicHisto(DvcsEvent ev) {
     W.fill(ev.W().mass());
     Q2.fill(-ev.Q().mass2());
-    MMass.fill(ev.MM2());
-    DeltaPhiPlaneHist.fill(ev.deltaPhiPlane());
-    PhiPlaneHist.fill(ev.PhiPlane());
-    ThvsPhi.fill(Math.toDegrees(ev.vhadron.phi()),Math.toDegrees(ev.vhadron.theta()));
-    //Xbj=ev.Xb();
+    WvsQ2.fill(ev.W().mass(),-ev.Q().mass2());
     Q2vsXbj.fill(-ev.Q().mass2(),ev.Xb());
 
-    ThetaHist.fill(Math.toDegrees(ev.vphoton.theta()));
-    DThetaHist.fill(ev.DTheta());
-    //vtmp.copy(ev.vBeam);
-    //vtmp.add(ev.vTarget);
-    //vtmp.sub(ev.velectron).sub(ev.vhadron);
-    MissThetaHist.fill(Math.toDegrees(ev.X("eh").theta()));
-
-    PhiPlaneHist.fill(ev.PhiPlane());
-    //DPhiHist.fill(ev.DPhi());
-    DeltaPhiPlaneHist.fill(ev.deltaPhiPlane());
-
-    //W.fill(ev.W().mass());
-    //Q2.fill(-ev.Q().mass2());
-    WvsQ2.fill(ev.W().mass(),-ev.Q().mass2());
-
+    //missing quantities of a complete DVCS final state e hadron gamma
     MMass.fill(ev.MM2());
+    MMom.fill(ev.Mp());
     MMomx.fill(ev.Mpx());
     MMomy.fill(ev.Mpy());
     MMomz.fill(ev.Mpz());
 
-    ThvsPhi.fill(Math.toDegrees(ev.vhadron.phi()),Math.toDegrees(ev.vhadron.theta()));
-
-    ConeAngleHist.fill(ev.coneangle());
     edgXmissingE.fill(ev.X("ehg").e());
     edgXmissingM2.fill(ev.X("ehg").mass2());
     edgXmissingP.fill(ev.X("ehg").p());
+
     edXmissingM2.fill(ev.X("eh").mass2());
     egXmissingM2.fill(ev.X("eg").mass2());
+
+    ThvsPhi.fill(Math.toDegrees(ev.vhadron.phi()),Math.toDegrees(ev.vhadron.theta()));
+//Xbj=ev.Xb();
+
+    ThetaHist.fill(Math.toDegrees(ev.vphoton.theta()));
+    DAngleGammaHist.fill(ev.DTheta());
+    ConeAngleHist.fill(ev.coneangle());
+    MissThetaHist.fill(Math.toDegrees(ev.X("eh").theta()));
+    PhiPlaneHist.fill(ev.PhiPlane());
+    DPhiHist.fill(ev.DPhi());
+    DeltaPhiPlaneHist.fill(ev.deltaPhiPlane());
+    DeltaPhiPlaneMattHist.fill(ev.deltaPhiPlane2());
 
     coneanglevsedgXM2.fill(ev.coneangle(),ev.X("egh").mass2());
     coneanglevsedXM2.fill(ev.coneangle(),ev.X("eh").mass2());
 
-    DeltaPhiPlaneHist.fill(ev.deltaPhiPlane());
-
-    MMomx.fill(ev.Mpx());
-    MMomy.fill(ev.Mpy());
-    MMomz.fill(ev.Mpz());
-
-
-
   }
   public void DrawMissing(TCanvas ec4){
-
-
 
     ec4.divide(3,3);
     ec4.cd(0).draw(DeltaPhiPlaneHist);

@@ -25,7 +25,8 @@ public class DcoDe
     if(user==1)
     reader.open("/home/justind/DATA/out_6489_2xx_3xx.hipo"); // open a file
     else
-    reader.open("/Users/biselli/Data/clas12/rgB/v8hipo4/out_6489_2xx.hipo"); // open a file
+    reader.open("/Users/biselli/Data/clas12/rgB/pass0v15/out_6595_2xx-3xx.hipo"); // open a file
+    //reader.open("/Users/biselli/Data/clas12/rgB/v8hipo4/out_6489_2xx.hipo"); // open a file
     Event     event = new Event();
     Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
     Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC:Event"));

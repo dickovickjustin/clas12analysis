@@ -190,6 +190,9 @@ public class DvcsEvent {
    public double MM2(){
        return this.X("ehg").mass2();
    }
+   public double Mp(){
+       return this.X("ehg").p();
+   }
    public double Mpx(){
        return this.X("ehg").px();
    }
@@ -206,12 +209,7 @@ public class DvcsEvent {
    public double Xb(){
        return (-this.Q().mass2())/(2*0.938*(this.vBeam.p()-this.velectron.p()));
    }
-   public double DTheta(){
-    //     LorentzVector temp = new LorentzVector();
-    //     temp.copy(this.X("eh"));
-    // return Math.toDegrees(vphoton.vect().angle(temp.vect()));
-    return Math.toDegrees(vphoton.vect().angle(this.X("eh").vect()));
-   }
+
    public double DPhi(){
     //     LorentzVector temp = new LorentzVector();
     //     temp.copy(this.X("eh"));
@@ -254,6 +252,12 @@ public class DvcsEvent {
         LorentzVector temp = new LorentzVector();
         temp.copy(this.X("eh"));
         return Math.toDegrees(this.vphoton.vect().angle(temp.vect()));
+    }
+    public double DTheta(){
+     //     LorentzVector temp = new LorentzVector();
+     //     temp.copy(this.X("eh"));
+     // return Math.toDegrees(vphoton.vect().angle(temp.vect()));
+     return Math.toDegrees(vphoton.vect().angle(this.X("eh").vect()));
     }
     //this function returns the missing vector for a given list of possible particles in a dvcs events
     //could be ehg or eg eh
