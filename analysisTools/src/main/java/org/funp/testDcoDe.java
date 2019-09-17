@@ -11,41 +11,46 @@ import org.jlab.jnp.physics.*;
 import org.jlab.jnp.reader.*;
 import org.funp.dvcs.*;
 
-/**
-* testing LorentzVector
-*
-*/
-public class DcoDe
+
+import java.util.*;
+
+
+public class testDcoDe
 {
   public static void main( String[] args )
   {
     int user=0;//user==1 is justin
-    HipoReader reader = new HipoReader(); // Create a reader obejct
+    HipoReader[] reader = new HipoReader[2];
+    reader[0] = new HipoReader();
+    reader[1] = new HipoReader(); // Create a reader obejct
     //reader.open("/home/jnp/data/out_6489_2xx_3xx.hipo"); // open a file
     if(user==1)
-    reader.open("/home/justind/DATA/out_6489_2xx_3xx.hipo"); // open a file
+    reader[0].open("/home/justind/DATA/out_6489_2xx_3xx.hipo"); // open a file
     else
-    reader.open("/Users/biselli/Data/clas12/rgB/pass0v15/out_6595_2xx-3xx.hipo"); // open a file
+    reader[0].open("/Users/biselli/Data/clas12/rgB/pass0v15/out_6595_2xx-3xx.hipo"); // open a file
+    reader[1].open("/Users/biselli/Data/clas12/rgB/pass0v15/out_6595_2xx-3xx.hipo"); // open a file
     //reader.open("/Users/biselli/Data/clas12/rgB/v8hipo4/out_6489_2xx.hipo"); // open a file
     Event     event = new Event();
-    Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
-    Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
+
     DvcsEvent ev    = new DvcsEvent();
     DvcsHisto hNC     = new DvcsHisto();//No cuts
     DvcsHisto hDC     = new DvcsHisto();//DVCS cuts
     DvcsHisto hAC     = new DvcsHisto();//All cuts
-
-    reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
     int times=0;
 
     int ndvcs=0;
 
     int counter=0;
 
+    for ( int i=0; i<reader.length; i++) {
+    reader[i].getEvent(event,0); //Reads the first event and resets to the begining of the file
+
 
     //loop over the events
-    while(reader.hasNext()==true){
-      reader.nextEvent(event);
+    while(reader[i].hasNext()==true){
+      Bank  particles = new Bank(reader[i].getSchemaFactory().getSchema("REC::Particle"));
+      Bank  run       = new Bank(reader[i].getSchemaFactory().getSchema("REC::Event"));
+      reader[i].nextEvent(event);
       event.read(particles);
       if(ev.FilterParticles(particles)){
         hNC.fillBasicHisto(ev);
@@ -61,6 +66,7 @@ public class DcoDe
         }
       }
     }
+  }
     //if(counter==0)break;
     //counter--;
 
@@ -83,4 +89,19 @@ public class DcoDe
 
 
 }
+public static Map<Integer,List<Integer>> loadMapByIndex(
+         Bank fromBank,
+         String idxVarName) {
+
+     Map<Integer,List<Integer>> map=new HashMap<Integer,List<Integer>>();
+     if (fromBank!=null) {
+
+         for (int iFrom=0; iFrom<fromBank.getRows(); iFrom++) {
+             final int iTo = fromBank.getInt(idxVarName,iFrom);
+             if (!map.containsKey(iTo)) map.put(iTo,new ArrayList<Integer>());
+             map.get(iTo).add(iFrom);
+         }
+     }
+     return map;
+   }
 }
