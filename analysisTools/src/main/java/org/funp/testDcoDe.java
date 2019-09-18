@@ -41,7 +41,7 @@ public class testDcoDe
     for ( int i=0; i<inputParam.getNfiles(); i++) {
       HipoReader reader = new HipoReader();
       reader.open(inputParam.getFileName(i));
-      System.out.println(inputParam.DataLocation+inputParam.filenames.get(i));
+      System.out.println(inputParam.getFileName(i));
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
 
 
