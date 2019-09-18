@@ -49,8 +49,11 @@ public class testDcoDe
     while(reader.hasNext()==true){
       Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
       Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
+      Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
       reader.nextEvent(event);
       event.read(particles);
+      event.read(scint);
+      Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
       if(ev.FilterParticles(particles)){
         hNC.fillBasicHisto(ev);
         if(ev.DVCScut()){

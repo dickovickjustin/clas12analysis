@@ -127,26 +127,7 @@ public class DvcsEvent {
        NewEvent=true;
        return FoundEvent;
    }
-   /**
-   * @param fromBank the bank containing the index variable
-   * @param idxVarName the name of the index variable
-   * @return map with keys being the index in toBank and values the indices in fromBank
-   */
-  public static Map<Integer,List<Integer>> loadMapByIndex(
-           Bank fromBank,
-           String idxVarName) {
 
-       Map<Integer,List<Integer>> map=new HashMap<Integer,List<Integer>>();
-       if (fromBank!=null) {
-
-           for (int iFrom=0; iFrom<fromBank.getRows(); iFrom++) {
-               final int iTo = fromBank.getInt(idxVarName,iFrom);
-               if (!map.containsKey(iTo)) map.put(iTo,new ArrayList<Integer>());
-               map.get(iTo).add(iFrom);
-           }
-       }
-       return map;
-   }
    public LorentzVector W(){
        LorentzVector  tmp = new LorentzVector();
        tmp.copy(vBeam);
