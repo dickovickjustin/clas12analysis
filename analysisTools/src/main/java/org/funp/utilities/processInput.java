@@ -2,7 +2,7 @@ package org.funp.utilities;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -37,7 +37,7 @@ public class processInput {
 	}
 	private void parse() {
 
-		CommandLineParser parser = new BasicParser();
+		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
 		try {
 			cmd = parser.parse(options, args);
