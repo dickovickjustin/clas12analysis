@@ -44,6 +44,7 @@ public class DvcsEvent {
     int nd=-1;
     boolean FoundEvent= false;
     boolean NewEvent=false;
+    double betahad=-10;
 
     public DvcsEvent() {
       // This constructor no parameter.
@@ -73,6 +74,10 @@ public class DvcsEvent {
                                 particles.getFloat("py",nh),
                                 particles.getFloat("pz",nh),
                                 this.MNUC);
+      betahad=particles.getFloat("beta",nh);
+   }
+   public  void pidStudies(Bank particles, Bank scint){
+
    }
    public  boolean FilterParticles(Bank particles) {
        LorentzVector  vtmp = new LorentzVector();
@@ -272,5 +277,12 @@ public class DvcsEvent {
           System.out.println(listpart+" combination of particle to calculate the missing particle is not supported, use e,g,h" );
         }
       return tmp;
+    }
+    public double BetaCalc(){
+        double betaCalc = vhadron.p() / Math.sqrt(MNUC*MNUC+vhadron.p()*vhadron.p());
+        return betaCalc;
+    }
+    public double beta(){
+        return betahad;
     }
 }

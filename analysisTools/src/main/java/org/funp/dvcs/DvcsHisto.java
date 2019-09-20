@@ -49,7 +49,9 @@ public class DvcsHisto {
 
   public H2F coneanglevsedgXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehgX
   public H2F coneanglevsedXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehX
-
+  public H2F betavsP ;
+  public H2F betacalcvsP;
+  public H1F deltabeta;
 
   public DvcsHisto() {
     W= new H1F("W" ,100, 0, 10.0);
@@ -122,6 +124,12 @@ public class DvcsHisto {
     coneanglevsedXM2.setTitleX("Cone Angle (deg.)");
     coneanglevsedXM2.setTitleY("eDX missing M2 (GeV)");
 
+    //pid histograms
+    betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.2);
+    betacalcvsP = new H2F("BetaCalc vs P","BetaCalc vs P", 100,0,10.2,100,0,1.2);
+    deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
+    deltabeta.setTitle("Beta - BetaCalc");
+
     //System.out.println("creating histograms"  );
   }
   public void fillBasicHisto(DvcsEvent ev) {
@@ -155,6 +163,10 @@ public class DvcsHisto {
 
     coneanglevsedgXM2.fill(ev.coneangle(),ev.X("egh").mass2());
     coneanglevsedXM2.fill(ev.coneangle(),ev.X("eh").mass2());
+
+    betavsP.fill(ev.vhadron.p(),ev.beta());
+    betacalcvsP.fill(ev.vhadron.p(),ev.BetaCalc());
+    deltabeta.fill(ev.beta()-ev.BetaCalc());
 
   }
   public void DrawBasic(TCanvas ec){
@@ -220,6 +232,9 @@ public class DvcsHisto {
     ec2.cd(6).draw(DeltaPhiPlaneMattHist);
     ec2.cd(7).draw(coneanglevsedgXM2);
     ec2.cd(8).draw(coneanglevsedXM2);
+    ec2.cd(9).draw(betavsP);
+    ec2.cd(10).draw(betacalcvsP);
+    ec2.cd(11).draw(deltabeta);
     // ec2.cd(10).draw(ThvsPhi);
     // ec2.cd(11).draw(MMomx);
     // ec2.cd(12).draw(MMomy);

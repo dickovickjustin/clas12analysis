@@ -61,7 +61,8 @@ public class testDcoDe
           //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
-          if((Math.toDegrees(ev.vphoton.theta())<5)  && ev.coneangle()<3 && ev.X("ehg").mass2()<15){
+          //(Math.toDegrees(ev.vphoton.theta())<5)  &&
+          if( ev.coneangle()<3 && ev.X("ehg").mass2()<15 && (ev.beta()-ev.BetaCalc())>-0.3){
             hAC.fillBasicHisto(ev);
             counter++;
           }
