@@ -7,11 +7,14 @@ import org.jlab.jnp.physics.*;
 import org.jlab.jnp.reader.*;
 
 import java.util.stream.Stream;
+
+import org.junit.Test;
 /**
  * testing LorentzVector
  *
  */
-public class testVectors
+
+public class VectorsTest
 {
     public static void main( String[] args )
     {
@@ -23,6 +26,6 @@ public class testVectors
         v1.setPxPyPzM(1, 0, 0, 0.5);
         v2.setPxPyPzM(1, 1, 0, 0.5);
 
-        System.out.println( v1.vect().angle(v2.vect()) );
+        System.out.println("angle between v1 and v2" + v1.vect().angle(v2.vect()) );
     }
 }
