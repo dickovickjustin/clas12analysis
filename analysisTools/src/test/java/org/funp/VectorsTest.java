@@ -8,7 +8,6 @@ import org.jlab.jnp.reader.*;
 
 import java.util.stream.Stream;
 
-import org.junit.Test;
 /**
  * testing LorentzVector
  *
