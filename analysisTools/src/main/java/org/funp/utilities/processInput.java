@@ -80,7 +80,7 @@ public class processInput {
 	private void GetFileNames(String FileListName){
 
 		//String[] filenames= new String[2];
-		int user=0;//user==1 is justin
+		//int user=0;//user==1 is justin
 		//HipoReader[] reader = new HipoReader[2];
 		//reader[0] = new HipoReader();
 		//reader[1] = new HipoReader(); // Create a reader obejct
@@ -100,6 +100,7 @@ public class processInput {
 			else System.out.println("Skipping "+st);
 			}
 			System.out.println("Found "+filenames.size()+" inputfiles");
+			br.close();
 		}
 		catch(FileNotFoundException fnfe)
 		{
