@@ -9,6 +9,7 @@ import org.jlab.groot.graphics.*;
 //---- imports for PHYSICS library
 import org.jlab.jnp.physics.*;
 import org.jlab.jnp.reader.*;
+
 import org.funp.dvcs.*;
 import org.funp.utilities.*;
 
@@ -61,8 +62,8 @@ public class testDcoDe
           //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
-          //(Math.toDegrees(ev.vphoton.theta())<5)  &&
-          if( ev.coneangle()<3 && ev.X("ehg").mass2()<15 && (ev.beta()-ev.BetaCalc())>-0.3){
+          //(Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20  Math.abs(ev.deltaPhiPlane())<1 &&
+          if(  ev.coneangle()<3 && Math.abs(ev.X("ehg").mass2())<3 && (ev.beta()-ev.BetaCalc())>-0.3 && ev.X("ehg").e()<3 ){
             hAC.fillBasicHisto(ev);
             counter++;
           }

@@ -26,12 +26,14 @@ import java.util.ArrayList;
 
 
 public class DvcsEvent {
-    public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,10.2,10.2);
-    public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,1.878);
+    double MNUC=1.878;
+    double BeamEnergy=10.1998;
+    public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,BeamEnergy,BeamEnergy);
+    public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,MNUC);
     public LorentzVector  velectron = new LorentzVector();
     public LorentzVector  vphoton = new LorentzVector();
     public LorentzVector  vhadron = new LorentzVector();
-    double MNUC=1.878;
+
     double el_en_max=0;
     double ph_en_max=0;
     double d_en_max=0;
@@ -43,7 +45,7 @@ public class DvcsEvent {
     int ng=-1;
     int nd=-1;
     boolean FoundEvent= false;
-    boolean NewEvent=false;
+    //boolean NewEvent=false;
     double betahad=-10;
 
     public DvcsEvent() {
@@ -122,14 +124,14 @@ public class DvcsEvent {
                 if(vtmp.e()>this.d_en_max)nd=npart;
             }
         }
-        if( ndeut>=1 && nelec>=1 && nphot>=1){
+        if( ndeut==1 && nelec==1 && nphot>=1){
             this.setElectron(particles,ne);
             this.setPhoton(particles,ng);
             this.setHadron(particles,nd);
             FoundEvent=true;
           }
        }
-       NewEvent=true;
+       //NewEvent=true;
        return FoundEvent;
    }
 

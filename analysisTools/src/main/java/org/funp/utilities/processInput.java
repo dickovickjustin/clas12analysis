@@ -93,10 +93,13 @@ public class processInput {
 
 			String st;
 			while ((st = br.readLine()) != null){
-				System.out.println(st);
-				filenames.add(st);
-				System.out.println(filenames.size());
+				if(!st.startsWith("#")){
+					System.out.println(st);
+					filenames.add(st);
 			}
+			else System.out.println("Skipping "+st);
+			}
+			System.out.println("Found "+filenames.size()+" inputfiles");
 		}
 		catch(FileNotFoundException fnfe)
 		{
@@ -109,7 +112,6 @@ public class processInput {
 		// necessary to convert back to String[]
 
 
-		System.out.println(filenames.size());
 
 		//filenames[0]="out_6489_2xx.hipo";
 		//filenames[1]="out_6489_2xx.hipo";

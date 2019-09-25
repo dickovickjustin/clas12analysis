@@ -73,13 +73,13 @@ public class DvcsHisto {
 
     edgXmissingE = new H1F("edgXmissingE",100,0,10);
     edgXmissingE.setTitle("eDGammaX Missing Energy");
-    edgXmissingM2 = new H1F("edgXmissingM2",100,-10,10);
+    edgXmissingM2 = new H1F("edgXmissingM2",100,-4,4);
     edgXmissingM2.setTitle("eDGammaX Missing Mass2");
-    edgXmissingP = new H1F("edgXmissingP",100,0,10);
+    edgXmissingP = new H1F("edgXmissingP",100,0,4);
     edgXmissingP.setTitle("eDGammaX Missing Momentum");
-    edgXmissingPx = new H1F("MMomx",100,-5,5);
+    edgXmissingPx = new H1F("MMomx",100,-1,1);
     edgXmissingPx.setTitleX("Missing X Momentum");
-    edgXmissingPy = new H1F("MMomy",100,-5,5);
+    edgXmissingPy = new H1F("MMomy",100,-1,1);
     edgXmissingPy.setTitleX("Missing Y Momentum");
     edgXmissingPz = new H1F("MMomz",100,-5,5);
     edgXmissingPz.setTitleX("Missing Z Momentum");
@@ -103,7 +103,7 @@ public class DvcsHisto {
     ThetaHist.setTitle("Photon Theta");
     //DAngleGammaHist = new H1F("DAngleGammaHist",100,-15,100);
     //DAngleGammaHist.setTitle("Angle between gamma and missing eDX");
-    ConeAngleHist = new H1F("ConeAngleHist",100,-15,100);
+    ConeAngleHist = new H1F("ConeAngleHist",100,-3,10);
     ConeAngleHist.setTitle("Angle between gamma and missing eDX");
     MissThetaHist = new H1F("MissThetaHist",100,0,180);
     MissThetaHist.setTitle("Missing Photon Theta");
@@ -111,7 +111,7 @@ public class DvcsHisto {
     PhiPlaneHist.setTitle("Photon Phi Plane");
     DPhiHist = new H1F("DPhiHist",100,-180,180);
     DPhiHist.setTitle("DPhi");
-    DeltaPhiPlaneHist = new H1F("DeltaPhiPlane",100,-100,100);
+    DeltaPhiPlaneHist = new H1F("DeltaPhiPlane",100,-10,10);
     DeltaPhiPlaneHist.setTitle("Delta Phi Plane");
     DeltaPhiPlaneMattHist = new H1F("DeltaPhiPlane",100,-100,100);
     DeltaPhiPlaneMattHist.setTitle("Delta Phi Plane Hattawy");
@@ -189,16 +189,19 @@ public class DvcsHisto {
 
   public void DrawMissing(TCanvas ec4){
 
-    ec4.divide(3,3);
+    ec4.divide(3,4);
     ec4.cd(0).draw(DeltaPhiPlaneHist);
-    ec4.cd(1).draw(edgXmissingE);
-    ec4.cd(2).draw(edgXmissingM2);
-    ec4.cd(3).draw(edgXmissingP);
-    ec4.cd(4).draw(edXmissingM2);
-    ec4.cd(5).draw(egXmissingM2);
-    ec4.cd(6).draw(ConeAngleHist);
-    ec4.cd(7).draw(edgXmissingPx);
-    ec4.cd(8).draw(edgXmissingPy);
+    ec4.cd(1).draw(DeltaPhiPlaneMattHist);
+    ec4.cd(2).draw(ConeAngleHist);
+    ec4.cd(3).draw(edgXmissingE);
+    ec4.cd(4).draw(edgXmissingM2);
+    ec4.cd(5).draw(edgXmissingP);
+    ec4.cd(6).draw(edXmissingM2);
+    ec4.cd(7).draw(egXmissingM2);
+
+    ec4.cd(9).draw(edgXmissingPx);
+    ec4.cd(10).draw(edgXmissingPy);
+    ec4.cd(11).draw(edgXmissingPz);
     //ec4.getScreenShot();
 
 
