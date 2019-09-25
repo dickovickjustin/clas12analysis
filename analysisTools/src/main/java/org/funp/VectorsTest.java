@@ -1,17 +1,16 @@
 package org.funp;
 //---- imports for GROOT library
-import org.jlab.groot.data.*;
-import org.jlab.groot.graphics.*;
+//import org.jlab.groot.data.*;
+//import org.jlab.groot.graphics.*;
 //---- imports for PHYSICS library
 import org.jlab.jnp.physics.*;
-import org.jlab.jnp.reader.*;
+//import org.jlab.jnp.reader.*;
 
 import java.util.stream.Stream;
 
 
 /**
  * testing LorentzVector
- *
  */
 
 public class VectorsTest

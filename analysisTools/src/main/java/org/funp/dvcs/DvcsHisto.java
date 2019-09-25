@@ -31,9 +31,10 @@ public class DvcsHisto {
 
   public H1F edXmissingM2; // missing mass of hadron electron final state (to be compared with gamma)
   public H1F egXmissingM2; // missing mass of gamma electron final state (to be compared with hadron)
-
+  public H2F egXmissingM2vsTh;
 
   public H2F ThvsPhi;//Theta vs phi for hadron
+  public H2F ThvsP;//Theta vs mom for hadron
 
   //public H2F MMvsMpz;
   //public H2F MpxvsMpz;
@@ -86,12 +87,16 @@ public class DvcsHisto {
 
     edXmissingM2 = new H1F("edXmissingM2",100,-10,10);
     edXmissingM2.setTitle("eDX Missing Mass2");
-    egXmissingM2 = new H1F("egXmissingM2",100,-10,10);
+    egXmissingM2 = new H1F("egXmissingM2",100,-0,10);
     egXmissingM2.setTitle("eGammaX Missing Mass2");
+    egXmissingM2vsTh =new H2F("egXmissingM2vsTh",100,0,140,100,0,10);
 
     ThvsPhi = new H2F("Theta vs Phi","Theta vs Phi",100,-180,180,100,0,180);
     ThvsPhi.setTitleX("Phi [Degrees]");
     ThvsPhi.setTitleY("Theta [Degrees]");
+    ThvsP = new H2F("Theta vs Phi","Theta vs Phi",100,0,1,100,0,140);
+    ThvsP.setTitleX("p [GeV]");
+    ThvsP.setTitleY("Theta [Degrees]");
 
     //MMvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
     //MMvsMpz.setTitleX("Missing Mass");
@@ -148,8 +153,10 @@ public class DvcsHisto {
 
     edXmissingM2.fill(ev.X("eh").mass2());
     egXmissingM2.fill(ev.X("eg").mass2());
+    egXmissingM2vsTh.fill(Math.toDegrees(ev.vhadron.theta()),ev.X("eg").mass2());
 
     ThvsPhi.fill(Math.toDegrees(ev.vhadron.phi()),Math.toDegrees(ev.vhadron.theta()));
+    ThvsP.fill(ev.vhadron.p(),Math.toDegrees(ev.vhadron.theta()));
 //Xbj=ev.Xb();
 
     ThetaHist.fill(Math.toDegrees(ev.vphoton.theta()));
@@ -178,9 +185,10 @@ public class DvcsHisto {
     ec.cd(2).draw(W);
     ec.cd(3).draw(Q2);
     ec.cd(4).draw(ThvsPhi);
-    ec.cd(5).draw(edgXmissingPx);
-    ec.cd(6).draw(edgXmissingPy);
-    ec.cd(7).draw(edgXmissingPz);
+    ec.cd(5).draw(ThvsP);
+    ec.cd(6).draw(edgXmissingPx);
+    ec.cd(7).draw(edgXmissingPy);
+    ec.cd(8).draw(edgXmissingPz);
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save("test.png");
 
@@ -198,7 +206,7 @@ public class DvcsHisto {
     ec4.cd(5).draw(edgXmissingP);
     ec4.cd(6).draw(edXmissingM2);
     ec4.cd(7).draw(egXmissingM2);
-
+ec4.cd(8).draw(egXmissingM2vsTh);
     ec4.cd(9).draw(edgXmissingPx);
     ec4.cd(10).draw(edgXmissingPy);
     ec4.cd(11).draw(edgXmissingPz);
