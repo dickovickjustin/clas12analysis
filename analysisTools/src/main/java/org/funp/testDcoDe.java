@@ -4,11 +4,11 @@ import org.jlab.groot.ui.TCanvas;
 import org.jlab.jnp.hipo4.io.*;
 import org.jlab.jnp.hipo4.data.*;
 //---- imports for GROOT library
-//import org.jlab.groot.data.*;
-//import org.jlab.groot.graphics.*;
+import org.jlab.groot.data.*;
+import org.jlab.groot.graphics.*;
 //---- imports for PHYSICS library
 import org.jlab.jnp.physics.*;
-//import org.jlab.jnp.reader.*;
+import org.jlab.jnp.reader.*;
 import org.funp.dvcs.*;
 
 /**
