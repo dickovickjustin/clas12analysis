@@ -63,7 +63,7 @@ public class DcoDe
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
           //Math.abs(ev.X("eh").mass2())<3 ev.coneangle()<5  (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 && ev.X("ehg").e()<3 && && (ev.beta()-ev.BetaCalc())>-0.3
-          if(   ev.coneangle()<5  ){
+          if(   ev.coneangle()<3  ){
             hAC.fillBasicHisto(ev);
             counter++;
           }
@@ -88,7 +88,7 @@ public class DcoDe
     hAC.DrawMissing(ec5);
 
     TCanvas ec6 = new TCanvas("call1",1200,1000);
-    hNC.DrawAll( ec6);
+    hNC.DrawAll(ec6);
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
 
 

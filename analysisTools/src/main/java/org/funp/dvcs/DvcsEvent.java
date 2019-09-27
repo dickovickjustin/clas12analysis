@@ -107,7 +107,10 @@ public class DvcsEvent {
                                      particles.getFloat("py",npart),
                                      particles.getFloat("pz",npart),
                                      0.0005);
-                if(vtmp.e()>this.el_en_max)ne=npart;
+                if(vtmp.e()>this.el_en_max){
+                  ne=npart;
+                  this.el_en_max=vtmp.e();
+                }
             }
             else if(pid==22){
                 nphot++;
@@ -115,8 +118,11 @@ public class DvcsEvent {
                                      particles.getFloat("py",npart),
                                      particles.getFloat("pz",npart),
                                      0.0);
-                if(vtmp.e()>this.ph_en_max)ng=npart;
+                if(vtmp.e()>this.ph_en_max){
+                  ng=npart;
+                  this.ph_en_max=vtmp.e();
 
+                }
             }
             else if(pid==PIDNUC && beta>0.16){
                 ndeut++;
@@ -124,7 +130,10 @@ public class DvcsEvent {
                                      particles.getFloat("py",npart),
                                      particles.getFloat("pz",npart),
                                      this.MNUC);
-                if(vtmp.e()>this.d_en_max)nd=npart;
+                if(vtmp.e()>this.d_en_max){
+                  nd=npart;
+                  this.d_en_max=vtmp.e();
+                }
             }
             else {
               nother++;

@@ -76,7 +76,7 @@ public class testDcoDe
 
     TCanvas ec6 = new TCanvas("call1",1200,1000);
     TCanvas ec7 = new TCanvas("call2",1200,1000);
-    hNC.DrawAll( ec6,ec7);
+    //hNC.DrawAll( ec6,ec7);
 
 
 
