@@ -41,6 +41,7 @@ public class DvcsEvent {
     int nelec=0;
     int nphot=0;
     int ndeut=0;
+    int nother=0;
     int ne=-1;
     int ng=-1;
     int nd=-1;
@@ -91,6 +92,7 @@ public class DvcsEvent {
        nelec=0;
        nphot=0;
        ndeut=0;
+       nother=0;
        ne=-1;
        ng=-1;
        nd=-1;
@@ -98,6 +100,7 @@ public class DvcsEvent {
        if(particles.getRows()>3){
         for(int npart=0; npart<particles.getRows(); npart++){
             int pid = particles.getInt("pid", npart);
+            float beta = particles.getFloat("beta", npart);
             if(pid==11){
                 nelec++;
                 vtmp.setPxPyPzM(particles.getFloat("px",npart),
@@ -115,7 +118,7 @@ public class DvcsEvent {
                 if(vtmp.e()>this.ph_en_max)ng=npart;
 
             }
-            else if(pid==PIDNUC){
+            else if(pid==PIDNUC && beta>0.16){
                 ndeut++;
                 vtmp.setPxPyPzM(particles.getFloat("px",npart),
                                      particles.getFloat("py",npart),
@@ -123,8 +126,12 @@ public class DvcsEvent {
                                      this.MNUC);
                 if(vtmp.e()>this.d_en_max)nd=npart;
             }
+            else {
+              nother++;
+            }
+
         }
-        if( ndeut==1 && nelec==1 && nphot>=1){
+        if( ndeut==1 && nelec==1 && nphot>=1 && nother==0){
             this.setElectron(particles,ne);
             this.setPhoton(particles,ng);
             this.setHadron(particles,nd);
@@ -191,7 +198,7 @@ public class DvcsEvent {
     //   return this.X("ehg").pz();
    //}
    public boolean DVCScut(){
-       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1);
+       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1 && this.vhadron.p()<2);
        return cut;
    }
    public double Xb(){

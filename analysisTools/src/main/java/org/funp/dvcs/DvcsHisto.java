@@ -114,7 +114,7 @@ public class DvcsHisto {
     MissThetaHist.setTitle("Missing Photon Theta");
     PhiPlaneHist = new H1F("PhiPlaneHist",100,0,180);
     PhiPlaneHist.setTitle("Photon Phi Plane");
-    DPhiHist = new H1F("DPhiHist",100,-180,180);
+    DPhiHist = new H1F("DPhiHist",100,-10,10);
     DPhiHist.setTitle("DPhi");
     DeltaPhiPlaneHist = new H1F("DeltaPhiPlane",100,-10,10);
     DeltaPhiPlaneHist.setTitle("Delta Phi Plane");
@@ -130,8 +130,8 @@ public class DvcsHisto {
     coneanglevsedXM2.setTitleY("eDX missing M2 (GeV)");
 
     //pid histograms
-    betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.2);
-    betacalcvsP = new H2F("BetaCalc vs P","BetaCalc vs P", 100,0,10.2,100,0,1.2);
+    betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
+    betacalcvsP = new H2F("BetaCalc vs P","BetaCalc vs P", 100,0,10.2,100,0,1.1);
     deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
     deltabeta.setTitle("Beta - BetaCalc");
 
