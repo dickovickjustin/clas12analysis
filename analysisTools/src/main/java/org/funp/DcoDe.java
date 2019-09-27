@@ -62,8 +62,8 @@ public class DcoDe
           //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
-          //ev.coneangle()<5  (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 && ev.X("ehg").e()<3 && && (ev.beta()-ev.BetaCalc())>-0.3
-          if(  Math.abs(ev.X("eh").mass2())<3   ){
+          //Math.abs(ev.X("eh").mass2())<3 ev.coneangle()<5  (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 && ev.X("ehg").e()<3 && && (ev.beta()-ev.BetaCalc())>-0.3
+          if(   ev.coneangle()<5  ){
             hAC.fillBasicHisto(ev);
             counter++;
           }
@@ -76,18 +76,21 @@ public class DcoDe
     //counter--;
 
     System.out.println("total dvcs events: " + ndvcs);
-    TCanvas ec = new TCanvas("c",1200,1000);
+    TCanvas ec = new TCanvas("Before cuts",1200,1000);
     hNC.DrawBasic( ec);
+    TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
+    hDC.DrawBasic( ec2);
 
-    TCanvas ec4 = new TCanvas("c2",1500,1500);
+    TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
     hDC.DrawMissing(ec4);
 
-    TCanvas ec5 = new TCanvas("c3",1500,1500);
+    TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
     hAC.DrawMissing(ec5);
 
     TCanvas ec6 = new TCanvas("call1",1200,1000);
-    TCanvas ec7 = new TCanvas("call2",1200,1000);
-    hNC.DrawAll( ec6,ec7);
+    hNC.DrawAll( ec6);
+    //TCanvas ec7 = new TCanvas("call2",1200,1000);
+
 
 
 

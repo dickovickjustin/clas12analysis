@@ -97,7 +97,7 @@ public class DvcsEvent {
        ng=-1;
        nd=-1;
 
-       if(particles.getRows()>3){
+       if(particles.getRows()>2){
         for(int npart=0; npart<particles.getRows(); npart++){
             int pid = particles.getInt("pid", npart);
             float beta = particles.getFloat("beta", npart);
@@ -198,7 +198,8 @@ public class DvcsEvent {
     //   return this.X("ehg").pz();
    //}
    public boolean DVCScut(){
-       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2 && this.vphoton.e()>1 && this.vhadron.p()<2);
+      //&& this.vphoton.e()>1
+       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2);
        return cut;
    }
    public double Xb(){

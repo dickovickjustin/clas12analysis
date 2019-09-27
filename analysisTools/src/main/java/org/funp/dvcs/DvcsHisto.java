@@ -39,7 +39,8 @@ public class DvcsHisto {
   //public H2F MMvsMpz;
   //public H2F MpxvsMpz;
 
-  public H1F ThetaHist;//theta gamma
+  public H1F hgTh;//theta gamma
+  public H1F hgEn;//Energy gamma
   //public H1F DAngleGammaHist ; //angle between gamma vector and missing hadron+e vector
   public H1F ConeAngleHist;//angle between gamma vector and missing hadron+e vector
   public H1F MissThetaHist;//theta missing hadron+e vector
@@ -53,6 +54,9 @@ public class DvcsHisto {
   public H2F betavsP ;
   public H2F betacalcvsP;
   public H1F deltabeta;
+
+
+
 
   public DvcsHisto() {
     W= new H1F("W" ,100, 0, 10.0);
@@ -104,8 +108,10 @@ public class DvcsHisto {
     //MpxvsMpz = new H2F("Q2 vs Xbj","Q2 vs Xbj",100,-2,2,100,-10,10);
     //MpxvsMpz.setTitleX("Missing X Momentum");
     //MpxvsMpz.setTitleY("Missing Z Momentum");
-    ThetaHist = new H1F("ThetaHist",100,0,50);
-    ThetaHist.setTitle("Photon Theta");
+    hgTh = new H1F("hgTh",100,0,50);
+    hgTh.setTitle("Photon Theta");
+    hgEn = new H1F("Photon energy",100,0,2);
+    hgEn.setTitle("Photon Energy");
     //DAngleGammaHist = new H1F("DAngleGammaHist",100,-15,100);
     //DAngleGammaHist.setTitle("Angle between gamma and missing eDX");
     ConeAngleHist = new H1F("ConeAngleHist",100,-3,10);
@@ -135,6 +141,9 @@ public class DvcsHisto {
     deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
     deltabeta.setTitle("Beta - BetaCalc");
 
+
+
+
     //System.out.println("creating histograms"  );
   }
   public void fillBasicHisto(DvcsEvent ev) {
@@ -159,7 +168,8 @@ public class DvcsHisto {
     ThvsP.fill(ev.vhadron.p(),Math.toDegrees(ev.vhadron.theta()));
 //Xbj=ev.Xb();
 
-    ThetaHist.fill(Math.toDegrees(ev.vphoton.theta()));
+    hgTh.fill(Math.toDegrees(ev.vphoton.theta()));
+    hgEn.fill(ev.vphoton.e());
     //DAngleGammaHist.fill(ev.DTheta());
     ConeAngleHist.fill(ev.coneangle());
     MissThetaHist.fill(Math.toDegrees(ev.X("eh").theta()));
@@ -174,6 +184,10 @@ public class DvcsHisto {
     betavsP.fill(ev.vhadron.p(),ev.beta());
     betacalcvsP.fill(ev.vhadron.p(),ev.BetaCalc());
     deltabeta.fill(ev.beta()-ev.BetaCalc());
+
+
+
+
 
   }
   public void DrawBasic(TCanvas ec){
@@ -206,7 +220,8 @@ public class DvcsHisto {
     ec4.cd(5).draw(edgXmissingP);
     ec4.cd(6).draw(edXmissingM2);
     ec4.cd(7).draw(egXmissingM2);
-ec4.cd(8).draw(egXmissingM2vsTh);
+
+    ec4.cd(8).draw(hgEn);
     ec4.cd(9).draw(edgXmissingPx);
     ec4.cd(10).draw(edgXmissingPy);
     ec4.cd(11).draw(edgXmissingPz);
@@ -214,8 +229,8 @@ ec4.cd(8).draw(egXmissingM2vsTh);
 
 
   }
-  public void DrawAll(TCanvas ec,TCanvas ec2){
-    ec.divide(4,4);
+  public void DrawAll(TCanvas ec){
+    ec.divide(5,6);
     ec.cd(0).draw(W);
     ec.cd(1).draw(Q2);
     ec.cd(2).draw(WvsQ2);
@@ -230,22 +245,25 @@ ec4.cd(8).draw(egXmissingM2vsTh);
     ec.cd(10).draw(edXmissingM2);
     ec.cd(11).draw(egXmissingM2);
     ec.cd(12).draw(ThvsPhi);
-    ec.cd(13).draw(ThetaHist);
+    ec.cd(13).draw(hgTh);
+    ec.cd(14).draw(hgEn);
 
-    ec2.divide(4,3);
-    //ec2.cd(0).draw(DAngleGammaHist);
-    ec2.cd(1).draw(ConeAngleHist);
-    ec2.cd(2).draw(MissThetaHist);
+    ec.cd(16).draw(ConeAngleHist);
+    ec.cd(17).draw(MissThetaHist);
     //ec.getPad(1).getAxisZ().setLog(true);
-    ec2.cd(3).draw(PhiPlaneHist);
-    ec2.cd(4).draw(DPhiHist);
-    ec2.cd(5).draw(DeltaPhiPlaneHist);
-    ec2.cd(6).draw(DeltaPhiPlaneMattHist);
-    ec2.cd(7).draw(coneanglevsedgXM2);
-    ec2.cd(8).draw(coneanglevsedXM2);
-    ec2.cd(9).draw(betavsP);
-    ec2.cd(10).draw(betacalcvsP);
-    ec2.cd(11).draw(deltabeta);
+    ec.cd(18).draw(PhiPlaneHist);
+    ec.cd(19).draw(DPhiHist);
+    ec.cd(20).draw(DeltaPhiPlaneHist);
+    ec.cd(21).draw(DeltaPhiPlaneMattHist);
+    ec.cd(22).draw(coneanglevsedgXM2);
+    ec.cd(23).draw(coneanglevsedXM2);
+    ec.cd(24).draw(betavsP);
+    ec.cd(25).draw(betacalcvsP);
+    ec.cd(26).draw(deltabeta);
+
+    //ec.divide(4,3);
+    //ec2.cd(0).draw(DAngleGammaHist);
+
     // ec2.cd(10).draw(ThvsPhi);
     // ec2.cd(11).draw(MMomx);
     // ec2.cd(12).draw(MMomy);
@@ -256,6 +274,6 @@ ec4.cd(8).draw(egXmissingM2vsTh);
     // ec2.cd(17).draw(edXmissingM2);
     // ec2.cd(18).draw(egXmissingM2);
     // ec2.cd(19).draw(ThvsPhi);
-    // ec2.cd(20).draw(ThetaHist);
+    // ec2.cd(20).draw(hgTh);
   }
 }
