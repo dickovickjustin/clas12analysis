@@ -97,7 +97,7 @@ public class DvcsEvent {
        ng=-1;
        nd=-1;
 
-       if(particles.getRows()>2){
+       if(particles.getRows()>0){
         for(int npart=0; npart<particles.getRows(); npart++){
             int pid = particles.getInt("pid", npart);
             float beta = particles.getFloat("beta", npart);
@@ -140,7 +140,8 @@ public class DvcsEvent {
             }
 
         }
-        if( ndeut==1 && nelec==1 && nphot>=1 && nother==0){
+        //
+        if( ndeut==1 && nelec==1 && nphot==1 && nother==0){
             this.setElectron(particles,ne);
             this.setPhoton(particles,ng);
             this.setHadron(particles,nd);
@@ -208,7 +209,7 @@ public class DvcsEvent {
    //}
    public boolean DVCScut(){
       //&& this.vphoton.e()>1
-       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2);
+       boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2 && Math.toDegrees(this.vphoton.theta())<5);
        return cut;
    }
    public double Xb(){

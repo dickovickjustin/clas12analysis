@@ -110,7 +110,7 @@ public class DvcsHisto {
     //MpxvsMpz.setTitleY("Missing Z Momentum");
     hgTh = new H1F("hgTh",100,0,50);
     hgTh.setTitle("Photon Theta");
-    hgEn = new H1F("Photon energy",100,0,2);
+    hgEn = new H1F("Photon energy",100,0,10);
     hgEn.setTitle("Photon Energy");
     //DAngleGammaHist = new H1F("DAngleGammaHist",100,-15,100);
     //DAngleGammaHist.setTitle("Angle between gamma and missing eDX");

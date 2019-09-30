@@ -24,7 +24,8 @@ public class readBanks
   {
     HipoReader reader = new HipoReader(); // Create a reader obejct
     //reader.open("/Users/biselli/Data/clas12/rgB/v8hipo4/out_6489_2xx.hipo"); // open a file
-    reader.open("/Users/biselli/Data/clas12/rgB/pass0v16/dst_inc_006596.hipo"); // open a file
+    //reader.open("/Users/biselli/Data/clas12/rgB/pass0v16/dst_inc_006596.hipo"); // open a file
+    reader.open("/Users/biselli/Data/clas12/rgB/pass0v16/dst_edeut_006596.hipo"); // open a file
 
     Event     event = new Event();
     Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
@@ -42,9 +43,9 @@ Bank evn      = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
     event.read(calos);
     event.read(scint);
     event.read(evn);
-    //particles.show();
-    scint.show();
-    calos.show();
+    particles.show();
+    //scint.show();
+    //calos.show();
     evn.show();
     System.out.println("n rows  part : " + particles.getRows());
     //System.out.println("n rows  calo : " + calos.getRows());
