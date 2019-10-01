@@ -124,14 +124,15 @@ public class DvcsEvent {
     ng=-1;
     nd=-1;
 
-    if(particles.getRows()>0){
+    if(particles.getRows()>2){
       for(int npart=0; npart<particles.getRows(); npart++){
         int pid = particles.getInt("pid", npart);
+        int status = particles.getInt("status", npart);
         float beta = particles.getFloat("beta", npart);
 
 
 
-        if(pid==11){
+        if(pid==11 && Math.abs(status)>=2000 && Math.abs(status)<3000){
           nelec++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -142,7 +143,7 @@ public class DvcsEvent {
             this.el_en_max=vtmp.e();
           }
         }
-        else if(pid==22){
+        else if(pid==22 && status<2000){
           nphot++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -154,7 +155,7 @@ public class DvcsEvent {
 
           }
         }
-        else if(pid==PIDNUC && beta>0.16){
+        else if(pid==PIDNUC && beta>0.16 && status>=4000){
           ndeut++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -334,6 +335,9 @@ public class DvcsEvent {
   }
   public double beta(){
     return betahad;
+  }
+  public double ctofen(){
+    return ctofenergyhad;
   }
   public static Map<Integer,List<Integer>> loadMapByIndex(
   Bank fromBank,

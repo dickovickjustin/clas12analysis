@@ -91,8 +91,10 @@ public class DcoDe
     TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
     hAC.DrawMissing(ec5);
 
-    TCanvas ec6 = new TCanvas("call1",1200,1000);
+    TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
     hNC.DrawAll(ec6);
+    TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
+    hDC.DrawAll(ec7);
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
 
 

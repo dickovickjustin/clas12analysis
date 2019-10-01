@@ -55,6 +55,8 @@ public class DvcsHisto {
   public H2F betacalcvsP;
   public H1F deltabeta;
 
+  public H2F ctofdedxvsp;
+
 
 
 
@@ -141,6 +143,7 @@ public class DvcsHisto {
     deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
     deltabeta.setTitle("Beta - BetaCalc");
 
+    ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
 
 
 
@@ -184,6 +187,8 @@ public class DvcsHisto {
     betavsP.fill(ev.vhadron.p(),ev.beta());
     betacalcvsP.fill(ev.vhadron.p(),ev.BetaCalc());
     deltabeta.fill(ev.beta()-ev.BetaCalc());
+
+    ctofdedxvsp.fill(ev.vhadron.p(),ev.ctofen());
 
 
 
@@ -260,6 +265,7 @@ public class DvcsHisto {
     ec.cd(24).draw(betavsP);
     ec.cd(25).draw(betacalcvsP);
     ec.cd(26).draw(deltabeta);
+    ec.cd(26).draw(ctofdedxvsp);
 
     //ec.divide(4,3);
     //ec2.cd(0).draw(DAngleGammaHist);
