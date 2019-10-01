@@ -54,8 +54,8 @@ public class DcoDe
       reader.nextEvent(event);
       event.read(particles);
       event.read(scint);
-      Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
-      if(ev.FilterParticles(particles)){
+      
+      if(ev.FilterParticles(particles,scint)){
         hNC.fillBasicHisto(ev);
         if(ev.DVCScut()){
           ndvcs++;
@@ -97,20 +97,6 @@ public class DcoDe
 
 
 }
-public static Map<Integer,List<Integer>> loadMapByIndex(
-         Bank fromBank,
-         String idxVarName) {
 
-     Map<Integer,List<Integer>> map=new HashMap<Integer,List<Integer>>();
-     if (fromBank!=null) {
-
-         for (int iFrom=0; iFrom<fromBank.getRows(); iFrom++) {
-             final int iTo = fromBank.getInt(idxVarName,iFrom);
-             if (!map.containsKey(iTo)) map.put(iTo,new ArrayList<Integer>());
-             map.get(iTo).add(iFrom);
-         }
-     }
-     return map;
-   }
 
 }
