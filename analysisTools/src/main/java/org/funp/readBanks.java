@@ -31,9 +31,9 @@ public class readBanks
     Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
     Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
 
-Bank calos      = new Bank(reader.getSchemaFactory().getSchema("REC::Calorimeter"));
-Bank scint      = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
-Bank evn      = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
+    Bank calos      = new Bank(reader.getSchemaFactory().getSchema("REC::Calorimeter"));
+    Bank scint      = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+    Bank evn      = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
 
 
     reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
@@ -44,7 +44,7 @@ Bank evn      = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
     event.read(scint);
     event.read(evn);
     particles.show();
-    //scint.show();
+    scint.show();
     //calos.show();
     evn.show();
     System.out.println("n rows  part : " + particles.getRows());

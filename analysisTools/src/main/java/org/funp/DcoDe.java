@@ -54,7 +54,7 @@ public class DcoDe
       reader.nextEvent(event);
       event.read(particles);
       event.read(scint);
-      
+
       if(ev.FilterParticles(particles,scint)){
         hNC.fillBasicHisto(ev);
         if(ev.DVCScut()){
@@ -76,6 +76,10 @@ public class DcoDe
     //counter--;
 
     System.out.println("total dvcs events: " + ndvcs);
+    System.out.println("total deuteron event : " + ev.tmpdeut);
+    System.out.println("total deuteron event with CTOF info: " + ev.tmpdeutctof);
+    System.out.println("total deuteron event with no CTOF info: " + ev.tmpdeutnoctof);
+      System.out.println("total deuteron event with CND info: " + ev.tmpdeutcnd);
     TCanvas ec = new TCanvas("Before cuts",1200,1000);
     hNC.DrawBasic( ec);
     TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
