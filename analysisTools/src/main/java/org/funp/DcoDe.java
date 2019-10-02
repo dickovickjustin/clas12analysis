@@ -25,7 +25,7 @@ public class DcoDe
   {
     processInput inputParam=new processInput(args);
 
-
+    double beamenergy;
 
     Event     event = new Event();
 
@@ -39,21 +39,40 @@ public class DcoDe
 
     int counter=0;
 
+    HashMap<Integer, Double> hmap=createrunmap();
+
+
+
+    System.out.println(hmap.get(6310));
+
     for ( int i=0; i<inputParam.getNfiles(); i++) {
       HipoReader reader = new HipoReader();
       reader.open(inputParam.getFileName(i));
       System.out.println(inputParam.getFileName(i));
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
-
-
+      Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
+      event.read(runconfig);
+      if(hmap.get(runconfig.getInt("run",0))!=null){
+        beamenergy=hmap.get(runconfig.getInt("run",0));
+        System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+beamenergy);
+      }
+      else {
+        System.out.println("Uknown beam energy for this run setting to default of 10.6 GeV");
+        beamenergy=10.5986;
+      }
     //loop over the events
     while(reader.hasNext()==true){
       Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
       Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
       Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+
+
       reader.nextEvent(event);
       event.read(particles);
       event.read(scint);
+
+
+
 
       if(ev.FilterParticles(particles,scint)){
         hNC.fillBasicHisto(ev);
@@ -96,13 +115,30 @@ public class DcoDe
     TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
     hDC.DrawAll(ec7);
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
-
-
-
-
-
-
 }
+
+  static HashMap<Integer, Double> createrunmap(){
+    HashMap<Integer, Double> hmap = new HashMap<Integer, Double>();
+    Double beam10p6=10.5986;
+    Double beam10p2=10.1998;
+    hmap.put(6302,beam10p6);
+    hmap.put(6303,beam10p6);
+    hmap.put(6305,beam10p6);
+    hmap.put(6307,beam10p6);
+    hmap.put(6310,beam10p6);
+    hmap.put(6313,beam10p6);
+
+    hmap.put(6428,beam10p2);
+    hmap.put(6433,beam10p2);
+    hmap.put(6442,beam10p2);
+    hmap.put(6450,beam10p2);
+    hmap.put(6467,beam10p2);
+    hmap.put(6475,beam10p2);
+    hmap.put(6481,beam10p2);
+    hmap.put(6492,beam10p2);
+    return hmap;
+
+  }
 
 
 }
