@@ -53,12 +53,11 @@ public class DcoDe
       Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
       event.read(runconfig);
       if(hmap.get(runconfig.getInt("run",0))!=null){
-        beamenergy=hmap.get(runconfig.getInt("run",0));
-        System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+beamenergy);
+        ev.BeamEnergy=hmap.get(runconfig.getInt("run",0));
+        System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+ev.BeamEnergy);
       }
       else {
-        System.out.println("Uknown beam energy for this run setting to default of 10.6 GeV");
-        beamenergy=10.5986;
+        System.out.println("Uknown beam energy for this run setting to default of"+ev.BeamEnergy );
       }
     //loop over the events
     while(reader.hasNext()==true){
