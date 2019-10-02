@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class DvcsEvent {
   double MNUC=1.878;
-  double BeamEnergy=10.1998;
+  public double BeamEnergy=10.1998;
   public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,BeamEnergy,BeamEnergy);
   public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,MNUC);
   public LorentzVector  velectron = new LorentzVector();
