@@ -126,12 +126,14 @@ public class DcoDe
     hmap.put(6307,beam10p6);
     hmap.put(6310,beam10p6);
     hmap.put(6313,beam10p6);
+    hmap.put(6321,beam10p6);
 
     hmap.put(6428,beam10p2);
     hmap.put(6433,beam10p2);
     hmap.put(6442,beam10p2);
     hmap.put(6450,beam10p2);
     hmap.put(6467,beam10p2);
+    hmap.put(6474,beam10p2);
     hmap.put(6475,beam10p2);
     hmap.put(6481,beam10p2);
     hmap.put(6492,beam10p2);
