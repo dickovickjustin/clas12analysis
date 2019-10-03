@@ -91,9 +91,9 @@ public class DvcsHisto {
     edgXmissingPz = new H1F("MMomz",100,-5,5);
     edgXmissingPz.setTitleX("Missing Z Momentum");
 
-    edXmissingM2 = new H1F("edXmissingM2",50,-10,10);
+    edXmissingM2 = new H1F("edXmissingM2",100,-10,10);
     edXmissingM2.setTitle("eDX Missing Mass2");
-    egXmissingM2 = new H1F("egXmissingM2",50,-0,10);
+    egXmissingM2 = new H1F("egXmissingM2",100,-2,8);
     egXmissingM2.setTitle("eGammaX Missing Mass2");
     egXmissingM2vsTh =new H2F("egXmissingM2vsTh",100,0,140,100,0,10);
 
