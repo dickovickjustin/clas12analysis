@@ -80,8 +80,8 @@ public class DcoDe
           //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
-          //Math.abs(ev.X("eh").mass2())<3   (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 &&  && (ev.beta()-ev.BetaCalc())>-0.3
-          if(   ev.coneangle()<2 && ev.X("ehg").e()<1 &&  Math.abs(ev.X("ehg").mass2())<1  ){
+          //Math.abs(ev.X("eh").mass2())<3  && ev.X("ehg").e()<1 (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 &&  && (ev.beta()-ev.BetaCalc())>-0.3
+          if(   ev.coneangle()<5  &&  Math.abs(ev.X("ehg").mass2())<1 &&  Math.abs(ev.X("eh").mass2())<1 ){
             hAC.fillBasicHisto(ev);
             counter++;
           }
