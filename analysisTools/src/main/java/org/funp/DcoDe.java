@@ -43,7 +43,7 @@ public class DcoDe
 
 
 
-    System.out.println(hmap.get(6310));
+    //System.out.println(hmap.get(6310));
 
     for ( int i=0; i<inputParam.getNfiles(); i++) {
       HipoReader reader = new HipoReader();
@@ -54,10 +54,12 @@ public class DcoDe
       event.read(runconfig);
       if(hmap.get(runconfig.getInt("run",0))!=null){
         ev.BeamEnergy=hmap.get(runconfig.getInt("run",0));
-        System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+ev.BeamEnergy);
+        ev.vBeam.setPxPyPzM(0,0,ev.BeamEnergy,0.0005);
+
+        System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+ev.vBeam.e());
       }
       else {
-        System.out.println("Uknown beam energy for this run setting to default of"+ev.BeamEnergy );
+        System.out.println("Uknown beam energy for this run setting to default of"+ev.vBeam.e() );
       }
     //loop over the events
     while(reader.hasNext()==true){
@@ -81,7 +83,7 @@ public class DcoDe
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
           //Math.abs(ev.X("eh").mass2())<3  && ev.X("ehg").e()<1 (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 &&  && (ev.beta()-ev.BetaCalc())>-0.3
-          if(   ev.coneangle()<5  &&  Math.abs(ev.X("ehg").mass2())<1 &&  Math.abs(ev.X("eh").mass2())<1 ){
+          if(   ev.coneangle()<3  &&  Math.abs(ev.X("ehg").e())<2 ){
             hAC.fillBasicHisto(ev);
             counter++;
           }

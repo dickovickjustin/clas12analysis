@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 
 public class DvcsEvent {
-  //double MNUC=1.878;
-  double MNUC=0.938;
+  double MNUC=1.875612;
+  //double MNUC=0.938;
   public double BeamEnergy=10.1998;
   public LorentzVector  vBeam   = new LorentzVector(0.0,0.0,BeamEnergy,BeamEnergy);
   public LorentzVector  vTarget = new LorentzVector(0.0,0.0,0.0,MNUC);
@@ -38,8 +38,8 @@ public class DvcsEvent {
   double el_en_max=0;
   double ph_en_max=0;
   double d_en_max=0;
-  //int PIDNUC=45;
-  int PIDNUC=2212;
+  int PIDNUC=45;
+  //int PIDNUC=2212;
   int nelec=0;
   int nphot=0;
   int ndeut=0;
@@ -118,6 +118,8 @@ public class DvcsEvent {
     this.ph_en_max=0;
     this.d_en_max=0;
 
+    Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
+
     nelec=0;
     nphot=0;
     ndeut=0;
@@ -126,12 +128,27 @@ public class DvcsEvent {
     ng=-1;
     nd=-1;
 
+    double ctofen=-10;
+
     if(particles.getRows()>0){
       for(int npart=0; npart<particles.getRows(); npart++){
+        ctofen=-10;
         int pid = particles.getInt("pid", npart);
         int status = particles.getInt("status", npart);
         float beta = particles.getFloat("beta", npart);
 
+
+        if(scintMap.get(npart)!=null){
+          for (int iscint : scintMap.get(npart)) {
+            //System.out.println(scintMap.get(nh));
+            final byte layer = scint.getByte("layer",iscint);
+            final byte detector = scint.getByte("detector",iscint);
+            //System.out.println(detector);
+            if(detector==4){
+              ctofen = scint.getFloat("energy",iscint);
+            }
+          }
+        }
 
 
         if(pid==11 && Math.abs(status)>=2000 && Math.abs(status)<3000){
@@ -157,7 +174,7 @@ public class DvcsEvent {
 
           }
         }
-        else if(pid==PIDNUC && beta>0.16 && status>=4000){
+        else if(pid==PIDNUC && beta>0.16 && status>=4000 && ctofen>5){
           ndeut++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -174,7 +191,7 @@ public class DvcsEvent {
 
       }
       //
-      if( ndeut==1 && nelec==1 && nphot>=1 && nother==0){
+      if( ndeut>=1 && nelec>=1 && nphot>=1){
         this.setElectron(particles,ne);
         this.setPhoton(particles,ng);
         this.setHadron(particles,scint,nd);
@@ -242,7 +259,7 @@ public class DvcsEvent {
   //}
   public boolean DVCScut(){
     //&& Math.toDegrees(this.vphoton.theta())<5
-    boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2  && this.vphoton.e()>1);
+    boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2  && this.vphoton.e()>2);
     return cut;
   }
   public double Xb(){
