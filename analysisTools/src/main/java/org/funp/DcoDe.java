@@ -54,7 +54,7 @@ public class DcoDe
       event.read(runconfig);
       if(hmap.get(runconfig.getInt("run",0))!=null){
         ev.BeamEnergy=hmap.get(runconfig.getInt("run",0));
-        ev.vBeam.setPxPyPzE(0, 0, Math.sqrt(ev.BeamEnergy*ev.BeamEnergy-0.0005*0.0005), ev.BeamEnergy);         setPxPyPzM(0,0,ev.BeamEnergy,0.0005);
+        ev.vBeam.setPxPyPzE(0, 0, Math.sqrt(ev.BeamEnergy*ev.BeamEnergy-0.0005*0.0005), ev.BeamEnergy);         
 
         System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+ev.vBeam.e());
       }
