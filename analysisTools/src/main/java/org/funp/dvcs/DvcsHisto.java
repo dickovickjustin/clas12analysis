@@ -32,6 +32,7 @@ public class DvcsHisto {
   public H1F edXmissingM2; // missing mass of hadron electron final state (to be compared with gamma)
   public H1F egXmissingM2; // missing mass of gamma electron final state (to be compared with hadron)
   public H1F egXmissingM;
+  public H1F edXmissingM;
   public H2F egXmissingM2vsTh;
 
   public H2F ThvsPhi;//Theta vs phi for hadron
@@ -96,7 +97,9 @@ public class DvcsHisto {
     edXmissingM2.setTitle("eDX Missing Mass2");
     egXmissingM2 = new H1F("egXmissingM2",100,-0,10);
     egXmissingM2.setTitle("eGammaX Missing Mass2");
-    egXmissingM = new H1F("egXmissingM2",100,-0,5);
+    edXmissingM = new H1F("eDXmissingM",100,-0,5);
+    edXmissingM.setTitle("eDX Missing Mass");
+    egXmissingM = new H1F("egXmissingM",100,-0,5);
     egXmissingM.setTitle("eGammaX Missing Mass");
     egXmissingM2vsTh =new H2F("egXmissingM2vsTh",100,0,140,100,0,10);
 
@@ -168,6 +171,7 @@ public class DvcsHisto {
 
     edXmissingM2.fill(ev.X("eh").mass2());
     egXmissingM2.fill(ev.X("eg").mass2());
+    edXmissingM.fill(ev.X("eh").mass());
     egXmissingM.fill(ev.X("eg").mass());
     egXmissingM2vsTh.fill(Math.toDegrees(ev.vhadron.theta()),ev.X("eg").mass2());
 
@@ -227,7 +231,7 @@ public class DvcsHisto {
     ec4.cd(3).draw(edgXmissingE);
     ec4.cd(4).draw(edgXmissingM2);
     ec4.cd(5).draw(edgXmissingP);
-    ec4.cd(6).draw(edXmissingM2);
+    ec4.cd(6).draw(edXmissingM);
     ec4.cd(7).draw(egXmissingM);
 
     ec4.cd(8).draw(hgEn);
@@ -251,7 +255,7 @@ public class DvcsHisto {
     ec.cd(7).draw(edgXmissingPx);
     ec.cd(8).draw(edgXmissingPy);
     ec.cd(9).draw(edgXmissingPz);
-    ec.cd(10).draw(edXmissingM2);
+    ec.cd(10).draw(edXmissingM);
     ec.cd(11).draw(egXmissingM);
     ec.cd(12).draw(ThvsPhi);
     ec.cd(13).draw(hgTh);
