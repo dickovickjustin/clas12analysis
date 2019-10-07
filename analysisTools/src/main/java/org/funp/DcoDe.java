@@ -54,7 +54,7 @@ public class DcoDe
       event.read(runconfig);
       if(hmap.get(runconfig.getInt("run",0))!=null){
         ev.BeamEnergy=hmap.get(runconfig.getInt("run",0));
-        ev.vBeam.setPxPyPzE(0, 0, Math.sqrt(ev.BeamEnergy*ev.BeamEnergy-0.0005*0.0005), ev.BeamEnergy);         
+        ev.vBeam.setPxPyPzE(0, 0, Math.sqrt(ev.BeamEnergy*ev.BeamEnergy-0.0005*0.0005), ev.BeamEnergy);
 
         System.out.println("Beam energy found for run"+runconfig.getInt("run",0)+" "+ev.vBeam.e());
       }
@@ -115,6 +115,9 @@ public class DcoDe
     hNC.DrawAll(ec6);
     TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
     hDC.DrawAll(ec7);
+
+
+    
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
 }
 

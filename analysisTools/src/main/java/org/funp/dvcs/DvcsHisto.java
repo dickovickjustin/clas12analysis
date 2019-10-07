@@ -217,7 +217,7 @@ public class DvcsHisto {
     ec.cd(7).draw(edgXmissingPy);
     ec.cd(8).draw(edgXmissingPz);
     ec.getCanvas().getScreenShot();
-    ec.getCanvas().save("test.png");
+    ec.getCanvas().save(ec.getName()+".png");
 
 
   }
@@ -238,7 +238,10 @@ public class DvcsHisto {
     ec4.cd(9).draw(edgXmissingPx);
     ec4.cd(10).draw(edgXmissingPy);
     ec4.cd(11).draw(edgXmissingPz);
+    ec4.getCanvas().getScreenShot();
+    ec4.getCanvas().save(ec4.getName()+".png");
     //ec4.getScreenShot();
+
 
 
   }
@@ -274,6 +277,9 @@ public class DvcsHisto {
     ec.cd(25).draw(betacalcvsP);
     ec.cd(26).draw(deltabeta);
     ec.cd(26).draw(ctofdedxvsp);
+    ec.getCanvas().getScreenShot();
+    ec.getCanvas().save(ec.getName()+".png");
+
 
     //ec.divide(4,3);
     //ec2.cd(0).draw(DAngleGammaHist);
