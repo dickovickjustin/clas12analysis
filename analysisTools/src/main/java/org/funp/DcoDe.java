@@ -83,7 +83,7 @@ public class DcoDe
           //    MMom.fill(vMMom.p());
           hDC.fillBasicHisto(ev);
           //Math.abs(ev.X("eh").mass2())<3  && ev.X("ehg").e()<1 (Math.toDegrees(ev.vphoton.theta())<5) && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20   &&  Math.abs(ev.deltaPhiPlane())<1 &&  && (ev.beta()-ev.BetaCalc())>-0.3
-          if(   ev.coneangle()<3  &&  Math.abs(ev.X("ehg").e())<2 ){
+          if(   ev.coneangle()<3  &&  Math.abs(ev.X("ehg").e())<2 && (ev.beta()-ev.BetaCalc())>-0.3){
             hAC.fillBasicHisto(ev);
             counter++;
           }
@@ -100,10 +100,10 @@ public class DcoDe
     System.out.println("total deuteron event with CTOF info: " + ev.tmpdeutctof);
     System.out.println("total deuteron event with no CTOF info: " + ev.tmpdeutnoctof);
       System.out.println("total deuteron event with CND info: " + ev.tmpdeutcnd);
-    TCanvas ec = new TCanvas("Before cuts",1200,1000);
-    hNC.DrawBasic( ec);
-    TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
-    hDC.DrawBasic( ec2);
+    //TCanvas ec = new TCanvas("Before cuts",1200,1000);
+    //hNC.DrawBasic( ec);
+    //TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
+    //hDC.DrawBasic( ec2);
 
     TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
     hDC.DrawMissing(ec4);
@@ -115,6 +115,8 @@ public class DcoDe
     hNC.DrawAll(ec6);
     TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
     hDC.DrawAll(ec7);
+    TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
+    hAC.DrawAll(ec8);
 
 
 

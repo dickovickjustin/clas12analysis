@@ -53,6 +53,7 @@ public class DvcsHisto {
 
   public H2F coneanglevsedgXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehgX
   public H2F coneanglevsedXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehX
+  public H2F coneanglevsegXM2;
   public H2F betavsP ;
   public H2F betacalcvsP;
   public H1F deltabeta;
@@ -106,7 +107,7 @@ public class DvcsHisto {
     ThvsPhi = new H2F("Theta vs Phi","Theta vs Phi",100,-180,180,100,0,180);
     ThvsPhi.setTitleX("Phi [Degrees]");
     ThvsPhi.setTitleY("Theta [Degrees]");
-    ThvsP = new H2F("Theta vs Phi","Theta vs Phi",100,0,1,100,0,140);
+    ThvsP = new H2F("Theta vs p","Theta vs p",100,0,1,100,0,140);
     ThvsP.setTitleX("p [GeV]");
     ThvsP.setTitleY("Theta [Degrees]");
 
@@ -136,12 +137,15 @@ public class DvcsHisto {
     DeltaPhiPlaneMattHist.setTitle("Delta Phi Plane Hattawy");
 
 
-    coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,180,100,-30,30);
+    coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,20,100,-10,10);
     coneanglevsedgXM2.setTitleX("Cone Angle (deg.)");
     coneanglevsedgXM2.setTitleY("eDGammaX missing M2 (GeV)");
-    coneanglevsedXM2 = new H2F("Cone Angle vs eDX missing M2","Cone Angle vs eDX missing M2",100,0,180,100,-30,30);
+    coneanglevsedXM2 = new H2F("Cone Angle vs eDX missing M2","Cone Angle vs eDX missing M2",100,0,20,100,-10,10);
     coneanglevsedXM2.setTitleX("Cone Angle (deg.)");
     coneanglevsedXM2.setTitleY("eDX missing M2 (GeV)");
+    coneanglevsegXM2 = new H2F("Cone Angle vs egX missing M2","Cone Angle vs egX missing M2",100,0,20,100,0,20);
+    coneanglevsegXM2.setTitleX("Cone Angle (deg.)");
+    coneanglevsegXM2.setTitleY("egX missing M2 (GeV)");
 
     //pid histograms
     betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
@@ -191,6 +195,7 @@ public class DvcsHisto {
 
     coneanglevsedgXM2.fill(ev.coneangle(),ev.X("egh").mass2());
     coneanglevsedXM2.fill(ev.coneangle(),ev.X("eh").mass2());
+coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
     betavsP.fill(ev.vhadron.p(),ev.beta());
     betacalcvsP.fill(ev.vhadron.p(),ev.BetaCalc());
@@ -213,7 +218,7 @@ public class DvcsHisto {
     ec.cd(3).draw(Q2);
     ec.cd(4).draw(ThvsPhi);
     ec.cd(5).draw(ThvsP);
-    ec.cd(6).draw(edgXmissingPx);
+    ec.cd(6).draw(deltabeta);
     ec.cd(7).draw(edgXmissingPy);
     ec.cd(8).draw(edgXmissingPz);
     ec.getCanvas().getScreenShot();
@@ -275,10 +280,13 @@ public class DvcsHisto {
     ec.cd(21).draw(DeltaPhiPlaneMattHist);
     ec.cd(22).draw(coneanglevsedgXM2);
     ec.cd(23).draw(coneanglevsedXM2);
-    ec.cd(24).draw(betavsP);
-    ec.cd(25).draw(betacalcvsP);
-    ec.cd(26).draw(deltabeta);
-    ec.cd(26).draw(ctofdedxvsp);
+    ec.cd(24).draw(coneanglevsegXM2);
+
+    ec.cd(25).draw(betavsP);
+ec.getPad().getAxisZ().setLog(true);
+    ec.cd(26).draw(betacalcvsP);
+    ec.cd(27).draw(deltabeta);
+    ec.cd(28).draw(ctofdedxvsp);
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getName()+".png");
 
