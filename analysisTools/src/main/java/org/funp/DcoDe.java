@@ -117,7 +117,7 @@ public class DcoDe
     hDC.DrawAll(ec7);
 
 
-    
+
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
 }
 
@@ -132,6 +132,11 @@ public class DcoDe
     hmap.put(6310,beam10p6);
     hmap.put(6313,beam10p6);
     hmap.put(6321,beam10p6);
+    hmap.put(6311,beam10p6);
+    hmap.put(6327,beam10p6);
+    hmap.put(6346,beam10p6);
+    hmap.put(6347,beam10p6);
+    hmap.put(6349,beam10p6);
 
     hmap.put(6428,beam10p2);
     hmap.put(6433,beam10p2);
@@ -139,7 +144,6 @@ public class DcoDe
     hmap.put(6450,beam10p2);
     hmap.put(6467,beam10p2);
     hmap.put(6474,beam10p2);
-    hmap.put(6475,beam10p2);
     hmap.put(6481,beam10p2);
     hmap.put(6492,beam10p2);
     return hmap;

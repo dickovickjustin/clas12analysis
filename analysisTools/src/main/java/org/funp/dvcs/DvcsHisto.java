@@ -224,20 +224,22 @@ public class DvcsHisto {
 
   public void DrawMissing(TCanvas ec4){
 
-    ec4.divide(3,4);
+    ec4.divide(4,4);
     ec4.cd(0).draw(DeltaPhiPlaneHist);
     ec4.cd(1).draw(DeltaPhiPlaneMattHist);
     ec4.cd(2).draw(ConeAngleHist);
-    ec4.cd(3).draw(edgXmissingE);
-    ec4.cd(4).draw(edgXmissingM2);
-    ec4.cd(5).draw(edgXmissingP);
-    ec4.cd(6).draw(edXmissingM);
-    ec4.cd(7).draw(egXmissingM);
+    ec4.cd(4).draw(edgXmissingE);
+    ec4.cd(5).draw(edgXmissingM2);
+    ec4.cd(6).draw(edgXmissingP);
+    ec4.cd(8).draw(edXmissingM);
+    ec4.cd(9).draw(edXmissingM2);
+    ec4.cd(10).draw(egXmissingM);
+    ec4.cd(11).draw(egXmissingM2);
 
-    ec4.cd(8).draw(hgEn);
-    ec4.cd(9).draw(edgXmissingPx);
-    ec4.cd(10).draw(edgXmissingPy);
-    ec4.cd(11).draw(edgXmissingPz);
+    ec4.cd(12).draw(hgEn);
+    ec4.cd(13).draw(edgXmissingPx);
+    ec4.cd(14).draw(edgXmissingPy);
+    ec4.cd(15).draw(edgXmissingPz);
     ec4.getCanvas().getScreenShot();
     ec4.getCanvas().save(ec4.getName()+".png");
     //ec4.getScreenShot();
