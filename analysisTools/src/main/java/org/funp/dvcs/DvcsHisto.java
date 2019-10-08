@@ -137,7 +137,7 @@ public class DvcsHisto {
     DeltaPhiPlaneMattHist.setTitle("Delta Phi Plane Hattawy");
 
 
-    coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,20,100,-10,10);
+    coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,20,100,-2,2);
     coneanglevsedgXM2.setTitleX("Cone Angle (deg.)");
     coneanglevsedgXM2.setTitleY("eDGammaX missing M2 (GeV)");
     coneanglevsedXM2 = new H2F("Cone Angle vs eDX missing M2","Cone Angle vs eDX missing M2",100,0,20,100,-10,10);
