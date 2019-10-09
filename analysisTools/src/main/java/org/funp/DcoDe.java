@@ -118,6 +118,13 @@ public class DcoDe
     TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
     hAC.DrawAll(ec8);
 
+    TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
+    hNC.DrawAll2(ec9);
+    TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
+    hDC.DrawAll2(ec10);
+    TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
+    hAC.DrawAll2(ec11);
+
 
 
     //TCanvas ec7 = new TCanvas("call2",1200,1000);

@@ -253,7 +253,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
   }
   public void DrawAll(TCanvas ec){
-    ec.divide(5,6);
+    ec.divide(5,4);
     ec.cd(0).draw(W);
     ec.cd(1).draw(Q2);
     ec.cd(2).draw(WvsQ2);
@@ -278,15 +278,15 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(19).draw(DPhiHist);
     ec.cd(20).draw(DeltaPhiPlaneHist);
     ec.cd(21).draw(DeltaPhiPlaneMattHist);
-    ec.cd(22).draw(coneanglevsedgXM2);
-    ec.cd(23).draw(coneanglevsedXM2);
-    ec.cd(24).draw(coneanglevsegXM2);
+    //ec.cd(22).draw(coneanglevsedgXM2);
+    //ec.cd(23).draw(coneanglevsedXM2);
+    //ec.cd(24).draw(coneanglevsegXM2);
 
-    ec.cd(25).draw(betavsP);
-ec.getPad().getAxisZ().setLog(true);
-    ec.cd(26).draw(betacalcvsP);
-    ec.cd(27).draw(deltabeta);
-    ec.cd(28).draw(ctofdedxvsp);
+    //ec.cd(25).draw(betavsP);
+//ec.getPad().getAxisZ().setLog(true);
+    //ec.cd(22).draw(betacalcvsP);
+    ec.cd(22).draw(deltabeta);
+    ec.cd(23).draw(ctofdedxvsp);
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getName()+".png");
 
@@ -306,4 +306,31 @@ ec.getPad().getAxisZ().setLog(true);
     // ec2.cd(19).draw(ThvsPhi);
     // ec2.cd(20).draw(hgTh);
   }
+  public void DrawAll2(TCanvas ec){
+    ec.divide(2,2);
+    ec.cd(0).draw(coneanglevsedgXM2);
+    ec.cd(1).draw(coneanglevsedXM2);
+    ec.cd(2).draw(coneanglevsegXM2);
+
+    ec.cd(3).draw(betavsP);
+ec.getPad().getAxisZ().setLog(true);
+
+
+
+    //ec.divide(4,3);
+    //ec2.cd(0).draw(DAngleGammaHist);
+
+    // ec2.cd(10).draw(ThvsPhi);
+    // ec2.cd(11).draw(MMomx);
+    // ec2.cd(12).draw(MMomy);
+    // ec2.cd(13).draw(MMomz);
+    // ec2.cd(14).draw(edgXmissingE);
+    // ec2.cd(15).draw(edgXmissingM2);
+    // ec2.cd(16).draw(edgXmissingP);
+    // ec2.cd(17).draw(edXmissingM2);
+    // ec2.cd(18).draw(egXmissingM2);
+    // ec2.cd(19).draw(ThvsPhi);
+    // ec2.cd(20).draw(hgTh);
+  }
+
 }
