@@ -60,6 +60,8 @@ public class DvcsHisto {
 
   public H2F ctofdedxvsp;
 
+  public H1F chisqHad;
+
 
 
 
@@ -313,7 +315,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(2).draw(coneanglevsegXM2);
 
     ec.cd(3).draw(betavsP);
-ec.getPad().getAxisZ().setLog(true);
+    ec.getPad().getAxisZ().setLog(true);
 
 
 
