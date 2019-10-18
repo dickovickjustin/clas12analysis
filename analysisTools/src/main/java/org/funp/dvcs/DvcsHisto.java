@@ -157,6 +157,7 @@ public class DvcsHisto {
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
     chisqHad=new H1F("Chi2Pid",100,0,10);
+    chisqHad.setTitle("ChiSquared PID");
 
 
 
@@ -205,6 +206,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     deltabeta.fill(ev.beta()-ev.BetaCalc());
 
     ctofdedxvsp.fill(ev.vhadron.p(),ev.ctofen());
+    chisqHad.fill(ev.chi2pid());
 
 
 
@@ -273,7 +275,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(12).draw(ThvsPhi);
     ec.cd(13).draw(hgTh);
     ec.cd(14).draw(hgEn);
-
+    ec.cd(15).draw(chisqHad);
     ec.cd(16).draw(ConeAngleHist);
     ec.cd(17).draw(MissThetaHist);
     //ec.getPad(1).getAxisZ().setLog(true);
@@ -290,6 +292,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     //ec.cd(22).draw(betacalcvsP);
     ec.cd(22).draw(deltabeta);
     ec.cd(23).draw(ctofdedxvsp);
+
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getName()+".png");
 
