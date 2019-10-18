@@ -62,6 +62,8 @@ public class DvcsHisto {
 
   public H1F chisqHad;
 
+  public H2F chi2vsdeltabeta;
+
 
 
 
@@ -159,6 +161,9 @@ public class DvcsHisto {
     chisqHad=new H1F("Chi2Pid",100,0,10);
     chisqHad.setTitle("ChiSquared PID");
 
+    chi2vsdeltabeta=new H2F("Chi2pid vs Delta Beta",100,0,10,100,-0.6,0.2);
+    chi2vsdeltabeta.setTitleX("Delta Beta");
+    chi2vsdeltabeta.setTitleY("Chi2PID");
 
 
     //System.out.println("creating histograms"  );
@@ -207,6 +212,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
     ctofdedxvsp.fill(ev.vhadron.p(),ev.ctofen());
     chisqHad.fill(ev.chi2pid());
+    chi2vsdeltabeta.fill(ev.chi2pid(),ev.beta()-ev.BetaCalc());
 
 
 
@@ -275,7 +281,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(12).draw(ThvsPhi);
     ec.cd(13).draw(hgTh);
     ec.cd(14).draw(hgEn);
-    ec.cd(15).draw(chisqHad);
+    ec.cd(15).draw(chi2vsdeltabeta);
     ec.cd(16).draw(ConeAngleHist);
     ec.cd(17).draw(MissThetaHist);
     //ec.getPad(1).getAxisZ().setLog(true);
