@@ -275,7 +275,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(12).draw(ThvsPhi);
     ec.cd(13).draw(hgTh);
     ec.cd(14).draw(hgEn);
-
+    ec.cd(15).draw(chisqHad);
     ec.cd(16).draw(ConeAngleHist);
     ec.cd(17).draw(MissThetaHist);
     //ec.getPad(1).getAxisZ().setLog(true);
@@ -292,7 +292,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     //ec.cd(22).draw(betacalcvsP);
     ec.cd(22).draw(deltabeta);
     ec.cd(23).draw(ctofdedxvsp);
-    ec.cd(24).draw(chisqHad);
+
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getName()+".png");
 
