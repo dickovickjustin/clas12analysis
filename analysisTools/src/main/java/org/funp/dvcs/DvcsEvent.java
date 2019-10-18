@@ -52,6 +52,7 @@ public class DvcsEvent {
   //boolean NewEvent=false;
   double betahad=-10;
   double ctofenergyhad=-10;
+  double chi2pidhad=-10;
   public int tmpdeutctof=0;
   public int tmpdeut=0;
   public int tmpdeutcnd=0;
@@ -88,6 +89,7 @@ public class DvcsEvent {
     particles.getFloat("pz",nh),
     this.MNUC);
     betahad=particles.getFloat("beta",nh);
+    chi2pidhad=particles.getFloat("chi2pid",nh);
     if(scintMap.get(nh)!=null){
       for (int iscint : scintMap.get(nh)) {
         //System.out.println(scintMap.get(nh));
@@ -358,6 +360,9 @@ public class DvcsEvent {
   }
   public double ctofen(){
     return ctofenergyhad;
+  }
+  public double chi2pid(){
+    return chi2pidhad;
   }
   public static Map<Integer,List<Integer>> loadMapByIndex(
   Bank fromBank,
