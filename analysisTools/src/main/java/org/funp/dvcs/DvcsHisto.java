@@ -258,7 +258,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
   }
   public void DrawAll(TCanvas ec){
-    ec.divide(5,4);
+    ec.divide(6,4);
     ec.cd(0).draw(W);
     ec.cd(1).draw(Q2);
     ec.cd(2).draw(WvsQ2);
