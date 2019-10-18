@@ -156,6 +156,7 @@ public class DvcsHisto {
     deltabeta.setTitle("Beta - BetaCalc");
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    chisqHad=new H1F("Chi2Pid",100,0,10);
 
 
 
