@@ -233,7 +233,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(7).draw(edgXmissingPy);
     ec.cd(8).draw(edgXmissingPz);
     ec.getCanvas().getScreenShot();
-    ec.getCanvas().save(ec.getName()+".png");
+    ec.getCanvas().save(ec.getTitle()+".png");
 
 
   }
@@ -257,7 +257,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec4.cd(14).draw(edgXmissingPy);
     ec4.cd(15).draw(edgXmissingPz);
     ec4.getCanvas().getScreenShot();
-    ec4.getCanvas().save(ec4.getName()+".png");
+    ec4.getCanvas().save(ec4.getTitle()+".png");
     //ec4.getScreenShot();
 
 
@@ -300,7 +300,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(23).draw(ctofdedxvsp);
 
     ec.getCanvas().getScreenShot();
-    ec.getCanvas().save(ec.getName()+".png");
+    ec.getCanvas().save(ec.getTitle()+".png");
 
 
     //ec.divide(4,3);
