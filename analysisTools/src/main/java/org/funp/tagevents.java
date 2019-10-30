@@ -45,6 +45,7 @@ public class tagevents
       Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
       Event     event = new Event();
       event.read(runconfig);
+      event.read(scint);
       DvcsEvent ev    = new DvcsEvent();
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
 
@@ -63,6 +64,7 @@ public class tagevents
       while(reader.hasNext()==true){
         reader.nextEvent(event);
         event.read(particles);
+	event.read(scint);
         totalcounter++;
         event.setEventTag(0);
         if(ev.FilterParticles(particles,scint)){
