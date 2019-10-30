@@ -161,9 +161,9 @@ public class DvcsHisto {
     chisqHad=new H1F("Chi2Pid",100,0,10);
     chisqHad.setTitle("ChiSquared PID");
 
-    chi2vsdeltabeta=new H2F("Chi2pid vs Delta Beta",100,0,10,100,-0.6,0.2);
-    chi2vsdeltabeta.setTitleX("Delta Beta");
-    chi2vsdeltabeta.setTitleY("Chi2PID");
+    chi2vsdeltabeta=new H2F("Chi2pid vs Delta Beta",100,0,30,100,-0.6,0.2);
+    chi2vsdeltabeta.setTitleX("Chi^2 PID");
+    chi2vsdeltabeta.setTitleY("DeltaBeta");
 
 
     //System.out.println("creating histograms"  );
