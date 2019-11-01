@@ -29,25 +29,28 @@ public class tagevents
     int totalcounter=0;
     int dvcscounter=0;
 
+    Event     event = new Event();
+    DvcsEvent ev    = new DvcsEvent();
+    DvcsHisto hNC     = new DvcsHisto();//No cuts
+    DvcsHisto hDC     = new DvcsHisto();//DVCS cuts
+    DvcsHisto hAC     = new DvcsHisto();//All cuts
+
     HashMap<Integer, Double> hmap=createrunmap();
 
     for ( int i=0; i<inputParam.getNfiles(); i++) {
-
+      //String filename = new String(inputParam.getFileName(i));
+      //String filenumber = new String(filename.substring(29,35));
       HipoReader reader = new HipoReader(); // Create a reader object
       System.out.println(inputParam.getFileName(i));
       reader.open(inputParam.getFileName(i)); // open a file
       HipoWriterSorted writer = new HipoWriterSorted();
       writer.getSchemaFactory().copy(reader.getSchemaFactory());
-      writer.open("/home/justind/DATA/dst_edeut_tagged.hipo");
+      //writer.open("/home/justind/DATA/dst_edeut_" + filenumber + "_tagged.hipo");
+	    writer.open("/home/justind/DATA/dst_edeut_tagged_test.hipo");
 
-      Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
-      Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
-      Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
-      Event     event = new Event();
-      event.read(runconfig);
-      DvcsEvent ev    = new DvcsEvent();
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
-
+      Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
+      event.read(runconfig);
       //map beam energies
       if(hmap.get(runconfig.getInt("run",0))!=null){
         ev.BeamEnergy=hmap.get(runconfig.getInt("run",0));
@@ -61,14 +64,29 @@ public class tagevents
 
 
       while(reader.hasNext()==true){
+        Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
+        Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
         reader.nextEvent(event);
         event.read(particles);
+	      event.read(scint);
         totalcounter++;
-        event.setEventTag(0);
+        event.setEventTag(10);
         if(ev.FilterParticles(particles,scint)){
+          hNC.fillBasicHisto(ev);
+          if(ev.DVCScut()){
+            //ndvcs++;
+            //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
+            //    MMom.fill(vMMom.p());
+            hDC.fillBasicHisto(ev);
+            //Math.abs(ev.X("eh").mass2())<3  && ev.X("ehg").e()<1 (Math.toDegrees(ev.vphoton.theta())<5) &&  Math.abs(ev.X("ehg").e())<2 && (Math.toDegrees(ev.vphoton.theta())<5)   Math.abs(ev.deltaPhiPlane2())<20 (ev.beta()-ev.BetaCalc())>-0.3  &&  Math.abs(ev.deltaPhiPlane())<1 &&  && (ev.beta()-ev.BetaCalc())>-0.3
+            if( ev.X("eh").mass2() < (-1.5* ev.coneangle()+2)  && ev.X("eh").mass2() >-2  && ((ev.beta()-ev.BetaCalc()) > (0.05*ev.chi2pid()-0.25)) ){
+              hAC.fillBasicHisto(ev);
+              //counter++;
+            }
+          }
         if(ev.W().mass() > 2 && -ev.Q().mass2() > 1){
             dvcscounter++;
-            event.setEventTag(1);
+            event.setEventTag(11);
         }
       }
       writer.addEvent(event,event.getEventTag());
@@ -77,6 +95,26 @@ public class tagevents
       System.out.println("total counter: " + totalcounter);
       System.out.println("dvcs counter: " + dvcscounter);
     }
+
+    TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
+    hDC.DrawMissing(ec4);
+
+    TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
+    hAC.DrawMissing(ec5);
+
+    TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
+    hNC.DrawAll(ec6);
+    TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
+    hDC.DrawAll(ec7);
+    TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
+    hAC.DrawAll(ec8);
+
+    TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
+    hNC.DrawAll2(ec9);
+    TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
+    hDC.DrawAll2(ec10);
+    TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
+    hAC.DrawAll2(ec11);
   }
 
   static HashMap<Integer, Double> createrunmap(){

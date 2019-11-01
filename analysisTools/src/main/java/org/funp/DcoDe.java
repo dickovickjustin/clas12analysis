@@ -47,6 +47,7 @@ public class DcoDe
 
     for ( int i=0; i<inputParam.getNfiles(); i++) {
       HipoReader reader = new HipoReader();
+	    reader.setTags(11);
       reader.open(inputParam.getFileName(i));
       System.out.println(inputParam.getFileName(i));
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
@@ -99,7 +100,7 @@ public class DcoDe
     System.out.println("total deuteron event : " + ev.tmpdeut);
     System.out.println("total deuteron event with CTOF info: " + ev.tmpdeutctof);
     System.out.println("total deuteron event with no CTOF info: " + ev.tmpdeutnoctof);
-      System.out.println("total deuteron event with CND info: " + ev.tmpdeutcnd);
+    System.out.println("total deuteron event with CND info: " + ev.tmpdeutcnd);
     //TCanvas ec = new TCanvas("Before cuts",1200,1000);
     //hNC.DrawBasic( ec);
     //TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
