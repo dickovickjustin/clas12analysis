@@ -47,7 +47,7 @@ public class tagevents
 			HipoWriterSorted writer = new HipoWriterSorted();
 			writer.getSchemaFactory().copy(reader.getSchemaFactory());
 			//writer.open("/home/justind/DATA/dst_edeut_" + filenumber + "_tagged.hipo");
-			writer.open("/home/justind/DATA/dst_edeut_tagged_test1.hipo");
+			writer.open("/Users/biselli/Data/clas12/rgB/pass0v16/dst_edeut_tagged_test1.hipo");
 
 			reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
 			Bank  runconfig       = new Bank(reader.getSchemaFactory().getSchema("RUN::config"));
@@ -71,8 +71,10 @@ public class tagevents
 				event.read(particles);
 				event.read(scint);
 				totalcounter++;
-				event.setEventTag(10);
+				event.setEventTag(0);
+
 				if(ev.FilterParticles(particles,scint)){
+					event.setEventTag(10);
 					hNC.fillBasicHisto(ev);
 					if(ev.DVCScut()){
 						dvcscounter++;
@@ -88,65 +90,68 @@ public class tagevents
 							//counter++;
 						}
 					}
-					}
-					//System.out.println("My tag is now"+event.getEventTag());
-					if(event.getEventTag()==10)totalcountertagged++;
-					writer.addEvent(event,event.getEventTag());
 				}
-				writer.close();
-				System.out.println("total counter: " + totalcounter);
-				System.out.println("total counter tagged: " + totalcountertagged);
-				System.out.println("dvcs counter: " + dvcscounter);
+				//System.out.println("My tag is now"+event.getEventTag());
+				if(event.getEventTag()==10){
+					totalcountertagged++;
+					//writer.addEvent(event,event.getEventTag());
+				}
+				writer.addEvent(event,event.getEventTag());
 			}
-
-			TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
-			hDC.DrawMissing(ec4);
-
-			TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
-			hAC.DrawMissing(ec5);
-
-			TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
-			hNC.DrawAll(ec6);
-			TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
-			hDC.DrawAll(ec7);
-			TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
-			hAC.DrawAll(ec8);
-
-			TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
-			hNC.DrawAll2(ec9);
-			TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
-			hDC.DrawAll2(ec10);
-			TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
-			hAC.DrawAll2(ec11);
+			writer.close();
+			System.out.println("total counter: " + totalcounter);
+			System.out.println("total counter tagged: " + totalcountertagged);
+			System.out.println("dvcs counter: " + dvcscounter);
 		}
 
-		static HashMap<Integer, Double> createrunmap(){
-			HashMap<Integer, Double> hmap = new HashMap<Integer, Double>();
-			Double beam10p6=10.5986;
-			Double beam10p2=10.1998;
-			hmap.put(6302,beam10p6);
-			hmap.put(6303,beam10p6);
-			hmap.put(6305,beam10p6);
-			hmap.put(6307,beam10p6);
-			hmap.put(6310,beam10p6);
-			hmap.put(6313,beam10p6);
-			hmap.put(6321,beam10p6);
-			hmap.put(6311,beam10p6);
-			hmap.put(6327,beam10p6);
-			hmap.put(6346,beam10p6);
-			hmap.put(6347,beam10p6);
-			hmap.put(6349,beam10p6);
+		TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
+		hDC.DrawMissing(ec4);
 
-			hmap.put(6428,beam10p2);
-			hmap.put(6433,beam10p2);
-			hmap.put(6442,beam10p2);
-			hmap.put(6450,beam10p2);
-			hmap.put(6467,beam10p2);
-			hmap.put(6474,beam10p2);
-			hmap.put(6481,beam10p2);
-			hmap.put(6492,beam10p2);
-			return hmap;
+		TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
+		hAC.DrawMissing(ec5);
 
-		}
+		TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
+		hNC.DrawAll(ec6);
+		TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
+		hDC.DrawAll(ec7);
+		TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
+		hAC.DrawAll(ec8);
+
+		TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
+		hNC.DrawAll2(ec9);
+		TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
+		hDC.DrawAll2(ec10);
+		TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
+		hAC.DrawAll2(ec11);
+	}
+
+	static HashMap<Integer, Double> createrunmap(){
+		HashMap<Integer, Double> hmap = new HashMap<Integer, Double>();
+		Double beam10p6=10.5986;
+		Double beam10p2=10.1998;
+		hmap.put(6302,beam10p6);
+		hmap.put(6303,beam10p6);
+		hmap.put(6305,beam10p6);
+		hmap.put(6307,beam10p6);
+		hmap.put(6310,beam10p6);
+		hmap.put(6313,beam10p6);
+		hmap.put(6321,beam10p6);
+		hmap.put(6311,beam10p6);
+		hmap.put(6327,beam10p6);
+		hmap.put(6346,beam10p6);
+		hmap.put(6347,beam10p6);
+		hmap.put(6349,beam10p6);
+
+		hmap.put(6428,beam10p2);
+		hmap.put(6433,beam10p2);
+		hmap.put(6442,beam10p2);
+		hmap.put(6450,beam10p2);
+		hmap.put(6467,beam10p2);
+		hmap.put(6474,beam10p2);
+		hmap.put(6481,beam10p2);
+		hmap.put(6492,beam10p2);
+		return hmap;
 
 	}
+
+}
