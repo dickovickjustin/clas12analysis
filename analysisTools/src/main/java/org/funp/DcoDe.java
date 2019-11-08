@@ -47,7 +47,6 @@ public class DcoDe
 
     for ( int i=0; i<inputParam.getNfiles(); i++) {
       HipoReader reader = new HipoReader();
-	    reader.setTags(0);
       reader.open(inputParam.getFileName(i));
       System.out.println(inputParam.getFileName(i));
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
