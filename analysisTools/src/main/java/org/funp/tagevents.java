@@ -71,6 +71,7 @@ public class tagevents
         event.read(particles);
 	      event.read(scint);
         totalcounter++;
+        
         if(ev.FilterParticles(particles,scint)){
           hNC.fillBasicHisto(ev);
           if(ev.DVCScut()){
