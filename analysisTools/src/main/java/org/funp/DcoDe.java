@@ -66,16 +66,18 @@ public class DcoDe
       Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
       Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
       Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+      Bank  hel       = new Bank(reader.getSchemaFactory().getSchema("HEL::online"));
 
 
       reader.nextEvent(event);
       event.read(particles);
       event.read(scint);
+      event.read(hel);
 
 
 
 
-      if(ev.FilterParticles(particles,scint)){
+      if(ev.FilterParticles(particles,scint,hel)){
         hNC.fillBasicHisto(ev);
         if(ev.DVCScut()){
           ndvcs++;
@@ -139,14 +141,17 @@ public class DcoDe
     hmap.put(6305,beam10p6);
     hmap.put(6307,beam10p6);
     hmap.put(6310,beam10p6);
+    hmap.put(6311,beam10p6);
     hmap.put(6313,beam10p6);
     hmap.put(6321,beam10p6);
-    hmap.put(6311,beam10p6);
+    hmap.put(6326,beam10p6);
     hmap.put(6327,beam10p6);
+    hmap.put(6328,beam10p6);
     hmap.put(6346,beam10p6);
     hmap.put(6347,beam10p6);
     hmap.put(6349,beam10p6);
 
+    hmap.put(6420,beam10p2);
     hmap.put(6428,beam10p2);
     hmap.put(6433,beam10p2);
     hmap.put(6442,beam10p2);
@@ -155,6 +160,15 @@ public class DcoDe
     hmap.put(6474,beam10p2);
     hmap.put(6481,beam10p2);
     hmap.put(6492,beam10p2);
+    hmap.put(6501,beam10p2);
+    hmap.put(6515,beam10p2);
+    hmap.put(6522,beam10p2);
+    hmap.put(6524,beam10p2);
+    hmap.put(6546,beam10p2);
+    hmap.put(6559,beam10p2);
+    hmap.put(6571,beam10p2);
+    hmap.put(6586,beam10p2);
+    hmap.put(6595,beam10p2);
     return hmap;
 
   }

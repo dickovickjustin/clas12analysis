@@ -57,6 +57,8 @@ public class DvcsEvent {
   public int tmpdeut=0;
   public int tmpdeutcnd=0;
   public int tmpdeutnoctof=0;
+  int helicity=-3;
+  int helicityraw=-3;
 
   public DvcsEvent() {
     // This constructor no parameter.
@@ -111,10 +113,14 @@ public class DvcsEvent {
       }
     }
   }
+  public void setHelicity(Bank hel){
+    helicity = hel.getInt("helicity", 0);
+    helicityraw = hel.getInt("helicityRaw", 0);
+  }
   public  void pidStudies(Bank particles, Bank scint){
 
   }
-  public  boolean FilterParticles(Bank particles, Bank scint) {
+  public  boolean FilterParticles(Bank particles, Bank scint, Bank hel) {
     LorentzVector  vtmp = new LorentzVector();
     FoundEvent= false;
     this.el_en_max=0;
@@ -198,6 +204,7 @@ public class DvcsEvent {
         this.setElectron(particles,ne);
         this.setPhoton(particles,ng);
         this.setHadron(particles,scint,nd);
+        this.setHelicity(hel);
         FoundEvent=true;
       }
     }

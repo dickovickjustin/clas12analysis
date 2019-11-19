@@ -64,6 +64,8 @@ public class DvcsHisto {
 
   public H2F chi2vsdeltabeta;
 
+  public H1F helicityhisto;
+  public H1F helicityrawhisto;
 
 
 
@@ -165,6 +167,10 @@ public class DvcsHisto {
     chi2vsdeltabeta.setTitleX("Chi^2 PID");
     chi2vsdeltabeta.setTitleY("DeltaBeta");
 
+    helicityhisto=new H1F("Helicity",9,-4,4);
+    helicityhisto.setTitle("Helicity");
+    helicityrawhisto=new H1F("Helicity Raw",9,-4,4);
+    helicityrawhisto.setTitle("Helicity Raw");
 
     //System.out.println("creating histograms"  );
   }
@@ -214,7 +220,8 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     chisqHad.fill(ev.chi2pid());
     chi2vsdeltabeta.fill(ev.chi2pid(),ev.beta()-ev.BetaCalc());
 
-
+    helicityhisto.fill(ev.helicity);
+    helicityrawhisto.fill(ev.helicityraw);
 
 
 
@@ -264,7 +271,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
   }
   public void DrawAll(TCanvas ec){
-    ec.divide(6,4);
+    ec.divide(6,5);
     ec.cd(0).draw(W);
     ec.cd(1).draw(Q2);
     ec.cd(2).draw(WvsQ2);
@@ -298,6 +305,8 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     //ec.cd(22).draw(betacalcvsP);
     ec.cd(22).draw(deltabeta);
     ec.cd(23).draw(ctofdedxvsp);
+    ec.cd(24).draw(helicityhisto);
+    ec.cd(25).draw(helicityrawhisto);
 
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getTitle()+".png");
