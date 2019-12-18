@@ -293,7 +293,10 @@ public class DvcsEvent {
     //     hadronicPlane.copy(vhadron.vect().cross(vphoton.vect()));
     // Phi = Math.toDegrees(leptonicPlane.angle(hadronicPlane));
     //System.out.println("Angle = " + Phi);
-    return Phi;
+if(leptonicPlane.dot(vphoton.vect()) < 0){
+	return 360 - Phi;
+}
+	else return Phi;
   }
   public double deltaPhiPlane(){
     double deltaphi;

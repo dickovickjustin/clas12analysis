@@ -5,6 +5,8 @@ import org.jlab.jnp.hipo4.data.*;
 //---- imports for GROOT library
 import org.jlab.groot.data.*;
 import org.jlab.groot.graphics.*;
+import org.jlab.groot.fitter.*;
+import org.jlab.groot.math.*;
 //---- imports for PHYSICS library
 import org.jlab.jnp.physics.*;
 import org.jlab.jnp.reader.*;
@@ -67,6 +69,8 @@ public class DvcsHisto {
   public H1F helicityhisto;
   public H1F helicityrawhisto;
 
+  public H1F Phiplus;
+  public H1F Phiminus;
 
 
   public DvcsHisto() {
@@ -133,7 +137,7 @@ public class DvcsHisto {
     ConeAngleHist.setTitle("Angle between gamma and missing eDX");
     MissThetaHist = new H1F("MissThetaHist",100,0,180);
     MissThetaHist.setTitle("Missing Photon Theta");
-    PhiPlaneHist = new H1F("PhiPlaneHist",100,0,180);
+    PhiPlaneHist = new H1F("PhiPlaneHist",100,0,360);
     PhiPlaneHist.setTitle("Photon Phi Plane");
     DPhiHist = new H1F("DPhiHist",100,-10,10);
     DPhiHist.setTitle("DPhi");
@@ -172,6 +176,8 @@ public class DvcsHisto {
     helicityrawhisto=new H1F("Helicity Raw",9,-4,4);
     helicityrawhisto.setTitle("Helicity Raw");
 
+    Phiplus = new H1F("Phiplus",10,0,360);
+    Phiminus = new H1F("Phiminus",10,0,360);
     //System.out.println("creating histograms"  );
   }
   public void fillBasicHisto(DvcsEvent ev) {
@@ -223,9 +229,41 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     helicityhisto.fill(ev.helicity);
     helicityrawhisto.fill(ev.helicityraw);
 
+    if(ev.helicity==1){
+      Phiplus.fill(ev.PhiPlane());
+    }
+    else if (ev.helicity==-1){
+      Phiminus.fill(ev.PhiPlane());
+    }
 
 
   }
+  public H1F buildAsym(){
+  H1F num;
+  H1F denom;
+  H1F Asym;
+  num = new H1F("num",10,0,360);
+  denom = new H1F("denom",10,0,360);
+  Asym = new H1F("Asymmetry","Asymmetry",10,0,360);
+  num.add(this.Phiplus);
+  num.sub(this.Phiminus);
+  denom.add(this.Phiplus);
+  denom.add(this.Phiminus);
+  Asym = Asym.divide(num,denom);
+  return Asym;
+ }
+
+  public void drawAsym(TCanvas ecA){
+  ecA.getPad().setAxisRange(0, 360, -0.4, 0.4);
+	ecA.draw((this.buildAsym()),"E");
+
+  F1D Asymfunc = new F1D("Asymfunc","[A]*sin(x/55)",0,360);
+  Asymfunc.setParameter(0,100);
+  //Asymfunc.setParameter(1,1);
+  DataFitter.fit(Asymfunc,this.buildAsym(),"");
+  ecA.draw(Asymfunc,"same");
+}
+
   public void DrawBasic(TCanvas ec){
     ec.divide(3,3);
     //ec.getPad(0).getAxisZ().setLog(true);
