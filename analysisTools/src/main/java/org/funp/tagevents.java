@@ -38,15 +38,15 @@ public class tagevents
     HashMap<Integer, Double> hmap=createrunmap();
 
     for (int i=0; i<inputParam.getNfiles(); i++) {
-      //String filename = new String(inputParam.getFileName(i));
-      //String filenumber = new String(filename.substring(inputParam.getFileName(i).length()-10,inputParam.getFileName().length()-5));
+      String filename = new String(inputParam.getFileName(i));
+      String filenumber = new String(filename.substring(inputParam.getFileName(i).length()-10,inputParam.getFileName(i).length()-5));
       HipoReader reader = new HipoReader(); // Create a reader object
       System.out.println(inputParam.getFileName(i));
       reader.open(inputParam.getFileName(i)); // open a file
       HipoWriterSorted writer = new HipoWriterSorted();
       writer.getSchemaFactory().copy(reader.getSchemaFactory());
-      //writer.open("/home/justind/DATA/dst_edeut_" + filenumber + "_tagged.hipo");
-	    writer.open("/home/justind/DATA/dst_edeut_tagged_test.hipo");
+      writer.open("/home/justind/DATA/dst_edeut_" + filenumber + "_trimmed_test.hipo");
+	    //writer.open("/home/justind/DATA/dst_edeut_006467_trimmed.hipo");
 
       reader.getEvent(event,0); //Reads the first event and resets to the begining of the file
 
@@ -64,16 +64,21 @@ public class tagevents
       }
 
 
-      while(reader.hasNext()==true && totalcounter<100000){
+      while(reader.hasNext()==true){
         Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
         Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+        Bank  hel     = new Bank(reader.getSchemaFactory().getSchema("HEL::online"));
         reader.nextEvent(event);
         event.read(particles);
 	      event.read(scint);
         totalcounter++;
-        
-        if(ev.FilterParticles(particles,scint)){
-          hNC.fillBasicHisto(ev);
+
+        if(ev.FilterParticles(particles,scint,hel)){
+          //if(((ev.beta()-ev.BetaCalc()) > (0.05*ev.chi2pid()-0.25))){
+            writer.addEvent(event);
+            dvcscounter++;
+          //}
+          /*hNC.fillBasicHisto(ev);
           if(ev.DVCScut()){
             //ndvcs++;
             //if(vMMass.mass2()>-1 && vMMass.mass2()<1 && (vphoton.theta()*180./Math.PI)<5){
@@ -88,9 +93,9 @@ public class tagevents
         if(ev.W().mass() > 2 && -ev.Q().mass2() > 1){
             dvcscounter++;
             event.setEventTag(11);
-        }
+        }*/
       }
-      writer.addEvent(event,event.getEventTag());
+      //writer.addEvent(event,event.getEventTag());
       //System.out.println("my tag is " + event.getEventTag());
     }
       writer.close();
@@ -98,7 +103,7 @@ public class tagevents
       System.out.println("dvcs counter: " + dvcscounter);
     }
 
-  TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
+  /*TCanvas ec4 = new TCanvas("Excl after DVCS cuts",1500,1500);
   hDC.DrawMissing(ec4);
 
   TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
@@ -116,7 +121,7 @@ public class tagevents
   TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
   hDC.DrawAll2(ec10);
   TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
-  hAC.DrawAll2(ec11);
+  hAC.DrawAll2(ec11);*/
 
 }
   static HashMap<Integer, Double> createrunmap(){

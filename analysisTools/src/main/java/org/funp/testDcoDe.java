@@ -30,7 +30,8 @@ public class testDcoDe
     Event     event = new Event();
     Bank  particles = new Bank(reader.getSchemaFactory().getSchema("REC::Particle"));
     Bank  run       = new Bank(reader.getSchemaFactory().getSchema("REC::Event"));
-    Bank  scint     = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+    Bank  scint       = new Bank(reader.getSchemaFactory().getSchema("REC::Scintillator"));
+    Bank  hel       = new Bank(reader.getSchemaFactory().getSchema("HEL::online"));
     DvcsEvent ev    = new DvcsEvent();
     DvcsHisto hNC     = new DvcsHisto();//No cuts
     DvcsHisto hDC     = new DvcsHisto();//DVCS cuts
@@ -49,7 +50,7 @@ public class testDcoDe
       reader.nextEvent(event);
       event.read(particles);
       event.read(scint);
-      if(ev.FilterParticles(particles,scint)){
+      if(ev.FilterParticles(particles,scint,hel)){
         hNC.fillBasicHisto(ev);
         if(ev.DVCScut()){
           ndvcs++;
