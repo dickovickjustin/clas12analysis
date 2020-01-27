@@ -33,6 +33,8 @@ public class DcoDe
     DvcsHisto hNC     = new DvcsHisto();//No cuts
     DvcsHisto hDC     = new DvcsHisto();//DVCS cuts
     DvcsHisto hAC     = new DvcsHisto();//All cuts
+    DvcsHisto hft     = new DvcsHisto();//Forward Tagger
+    DvcsHisto hfd     = new DvcsHisto();//Forward Detector
     int times=0;
 
     int ndvcs=0;

@@ -226,6 +226,13 @@ public class DvcsEvent {
     return tmp;
 
   }
+  public LorentzVector t(){
+    LorentzVector tmp = new LorentzVector();
+    tmp.copy(vphoton);
+    tmp.sub(vBeam);
+    tmp.sub(velectron);
+    return tmp;
+  }
   // public LorentzVector DVCSmissX(){
   //     LorentzVector  tmp = new LorentzVector();
   //     tmp.copy(vBeam);
