@@ -249,16 +249,17 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
   num.sub(this.Phiminus);
   denom.add(this.Phiplus);
   denom.add(this.Phiminus);
+  denom.normalize(0.8);
   Asym = Asym.divide(num,denom);
   return Asym;
  }
 
   public void drawAsym(TCanvas ecA){
-  ecA.getPad().setAxisRange(0, 360, -0.4, 0.4);
+  ecA.getPad().setAxisRange(0, 360, -1.2, 0.8);
 	ecA.draw((this.buildAsym()),"E");
 
-  F1D Asymfunc = new F1D("Asymfunc","[A]*sin(x/55)",0,360);
-  Asymfunc.setParameter(0,100);
+  F1D Asymfunc = new F1D("Asymfunc","[A]*sin(x/20)",0,360);
+  Asymfunc.setParameter(0,0.4);
   //Asymfunc.setParameter(1,1);
   DataFitter.fit(Asymfunc,this.buildAsym(),"");
   ecA.draw(Asymfunc,"same");

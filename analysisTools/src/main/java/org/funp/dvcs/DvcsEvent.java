@@ -171,7 +171,7 @@ public class DvcsEvent {
             this.el_en_max=vtmp.e();
           }
         }
-        else if(pid==22 && status<2000){
+        else if(pid==22 && status<4000){
           nphot++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
