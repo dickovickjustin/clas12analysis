@@ -180,7 +180,7 @@ public class DvcsHisto {
 
     Phiplus = new H1F("Phiplus",10,0,360);
     Phiminus = new H1F("Phiminus",10,0,360);
-    thisto = new H1F("-t","-t",0,10.6);
+    thisto = new H1F("-t","-t",100,0,10.6);
     //System.out.println("creating histograms"  );
   }
   public void fillBasicHisto(DvcsEvent ev) {
