@@ -279,6 +279,10 @@ public class DvcsEvent {
     boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2  && this.vphoton.e()>2);
     return cut;
   }
+  public boolean Exclusivitycut(){
+    boolean cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2)  && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && this.X("ehg").p()<1);
+    return cut;
+  }
   public double Xb(){
     return (-this.Q().mass2())/(2*0.938*(this.vBeam.p()-this.velectron.p()));
   }
