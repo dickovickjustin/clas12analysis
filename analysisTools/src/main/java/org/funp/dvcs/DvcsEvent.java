@@ -59,6 +59,9 @@ public class DvcsEvent {
   public int tmpdeutnoctof=0;
   int helicity=-3;
   int helicityraw=-3;
+  //conf is 1 for gamma in FT and e FD, 2 is for gamma and e in FD
+  int conf=0;
+
 
   public DvcsEvent() {
     // This constructor no parameter.
@@ -277,6 +280,10 @@ public class DvcsEvent {
   public boolean DVCScut(){
     //&& Math.toDegrees(this.vphoton.theta())<5
     boolean cut=(-this.Q().mass2()>1 && this.W().mass()>2  && this.vhadron.p()<2  && this.vphoton.e()>2);
+    return cut;
+  }
+  public boolean Exclusivitycut(){
+    boolean cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2)  && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && this.X("ehg").p()<1);
     return cut;
   }
   public double Xb(){
