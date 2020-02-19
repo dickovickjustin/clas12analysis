@@ -57,8 +57,12 @@ public class DvcsEvent {
   public int tmpdeut=0;
   public int tmpdeutcnd=0;
   public int tmpdeutnoctof=0;
+  public int helicityplus=0;
+  public int helicityminus=0;
   int helicity=-3;
   int helicityraw=-3;
+  //conf is 1 for gamma in FT and e in FD, 2 is for gamma and e in FD
+  int conf=0;
 
   public DvcsEvent() {
     // This constructor no parameter.
@@ -116,6 +120,8 @@ public class DvcsEvent {
   public void setHelicity(Bank hel){
     helicity = hel.getInt("helicity", 0);
     helicityraw = hel.getInt("helicityRaw", 0);
+    if(helicity>0) helicityplus++;
+    else if (helicity<0) helicityminus++;
   }
   public  void pidStudies(Bank particles, Bank scint){
 
@@ -171,7 +177,7 @@ public class DvcsEvent {
             this.el_en_max=vtmp.e();
           }
         }
-        else if(pid==22 && status<4000){
+        else if(pid==22 && Math.abs(status)>=2000 && Math.abs(status)<4000){
           nphot++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -180,10 +186,12 @@ public class DvcsEvent {
           if(vtmp.e()>this.ph_en_max){
             ng=npart;
             this.ph_en_max=vtmp.e();
+            if(status<=2000)conf=1;
+            else if(status>=2000 && status<4000)conf=2;
 
           }
         }
-        else if(pid==PIDNUC && beta>0.16 && status>=4000 && ctofen>5){
+        else if(pid==PIDNUC && beta>0.16 && Math.abs(status)>=4000 && ctofen>5){
           ndeut++;
           vtmp.setPxPyPzM(particles.getFloat("px",npart),
           particles.getFloat("py",npart),
@@ -228,10 +236,14 @@ public class DvcsEvent {
   }
   public LorentzVector t(){
     LorentzVector tmp = new LorentzVector();
-    tmp.copy(vphoton);
+    tmp.copy(velectron);
     tmp.sub(vBeam);
-    tmp.sub(velectron);
     return tmp;
+  }
+  public double pPerp(){
+    double px=(this.vBeam.px()-this.velectron.px()-this.vhadron.px()-this.vphoton.px());
+    double py=(this.vBeam.py()-this.velectron.py()-this.vhadron.py()-this.vphoton.py());
+    return Math.sqrt(px*px+py*py);
   }
   // public LorentzVector DVCSmissX(){
   //     LorentzVector  tmp = new LorentzVector();
@@ -280,7 +292,13 @@ public class DvcsEvent {
     return cut;
   }
   public boolean Exclusivitycut(){
-    boolean cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2)  && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && this.X("ehg").p()<1);
+    boolean cut=false;
+    if (conf==1){
+      cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2) && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && -1*this.t().mass()<1 && this.pPerp()<0.5);
+    }
+    else if (conf==2){
+      cut=(this.X("eh").mass2() < (-1* this.coneangle()+2) && this.X("eh").mass2()>-2 && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.10)) && this.X("ehg").mass2()>-0.75 && this.X("ehg").e()<3 && this.pPerp()<0.5);
+    }
     return cut;
   }
   public double Xb(){

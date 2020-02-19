@@ -105,6 +105,9 @@ public class DcoDe
     System.out.println("total deuteron event with CTOF info: " + ev.tmpdeutctof);
     System.out.println("total deuteron event with no CTOF info: " + ev.tmpdeutnoctof);
     System.out.println("total deuteron event with CND info: " + ev.tmpdeutcnd);
+    System.out.println("total helicity+: " + ev.helicityplus);
+    System.out.println("total helicity-: " + ev.helicityminus);
+    System.out.println("total events after excl cuts: " + counter);
     //TCanvas ec = new TCanvas("Before cuts",1200,1000);
     //hNC.DrawBasic( ec);
     //TCanvas ec2 = new TCanvas("After DVCS cuts",1200,1000);
@@ -116,23 +119,41 @@ public class DcoDe
     TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
     hAC.DrawMissing(ec5);
 
-    TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
+  /*  TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
     hNC.DrawAll(ec6);
     TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
-    hDC.DrawAll(ec7);
+    hDC.DrawAll(ec7);*/
     TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
     hAC.DrawAll(ec8);
 
-    TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
-    hNC.DrawAll2(ec9);
+    /*TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
+    hNC.DrawAll2(ec9);*/
     TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
     hDC.DrawAll2(ec10);
     TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
     hAC.DrawAll2(ec11);
 
-
     TCanvas ecA = new TCanvas("Asymmetry",1200,1200);
     hAC.drawAsym(ecA);
+
+    TCanvas ecP1 = new TCanvas("Plotnocuts",1200,1200);
+    //hNC.drawPlot1(ecP);
+    hNC.drawPlot(ecP1);
+
+
+
+    TCanvas ecP2 = new TCanvas("Plotdvcscuts",1200,1200);
+    //hNC.drawPlot1(ecP);
+    hDC.drawPlot(ecP2);
+
+
+
+    TCanvas ecP3 = new TCanvas("Plotexclcuts",1200,1200);
+    //hNC.drawPlot1(ecP);
+    hAC.drawPlot(ecP3);
+
+
+
 
     //TCanvas ec7 = new TCanvas("call2",1200,1000);
 }
