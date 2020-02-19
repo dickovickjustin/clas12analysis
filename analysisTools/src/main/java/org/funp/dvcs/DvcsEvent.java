@@ -61,8 +61,9 @@ public class DvcsEvent {
   public int helicityminus=0;
   int helicity=-3;
   int helicityraw=-3;
-  //conf is 1 for gamma in FT and e in FD, 2 is for gamma and e in FD
+  //conf is 1 for gamma in FT and e FD, 2 is for gamma and e in FD
   int conf=0;
+
 
   public DvcsEvent() {
     // This constructor no parameter.
