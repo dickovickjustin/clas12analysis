@@ -240,6 +240,7 @@ public class DvcsEvent {
     tmp.copy(vphoton);
     tmp.sub(velectron);
     tmp.sub(vBeam);
+    tmp.sub(vphoton);
     return tmp;
   }
   public double pPerp(){
