@@ -104,7 +104,7 @@ public class DvcsHisto {
     edgXmissingE = new H1F("edgXmissingE",100,0,10);
     edgXmissingE.setTitleX("eDγX Missing Energy [GeV]");
     edgXmissingM2 = new H1F("edgXmissingM2",100,-4,4);
-    edgXmissingM2.setTitleX("eDγX Missing Mass^2 [GeV/c^2]^2");
+    edgXmissingM2.setTitleX("(M_X)^2(ed#rarroweDγX) [GeV/c^2]^2");
     edgXmissingP = new H1F("edgXmissingP",100,0,4);
     edgXmissingP.setTitleX("eDγX Missing Momentum [GeV/c]");
     edgXmissingPx = new H1F("MMomx",100,-1,1);
@@ -121,7 +121,7 @@ public class DvcsHisto {
     edXmissingM = new H1F("eDXmissingM",100,-0,5);
     edXmissingM.setTitle("eDX Missing Mass");
     egXmissingM = new H1F("egXmissingM",100,-0,5);
-    egXmissingM.setTitleX("M_x(ed#rarrowe#gammaX)");
+    egXmissingM.setTitleX("M_x(e d#rarrow e #gamma X) [GeV/c^2]");
     egXmissingM2vsTh =new H2F("egXmissingM2vsTh",100,0,140,100,0,10);
 
     ThvsPhi = new H2F("Deuteron #theta vs #phi","Deuteron #theta vs #phi",100,-180,180,100,0,180);
@@ -165,10 +165,10 @@ public class DvcsHisto {
     PhiPlaneHist.setTitleX("#phi, the angle between the Leptonic and Hadronic planes");
     DPhiHist = new H1F("DPhiHist",100,-10,10);
     DPhiHist.setTitle("DPhi");
-    DeltaPhiPlaneHist = new H1F("DeltaPhiPlane",100,-10,10);
-    DeltaPhiPlaneHist.setTitle("Delta Phi Plane");
+    DeltaPhiPlaneHist = new H1F("#Delta#phi Plane","",100,-10,10);
+    DeltaPhiPlaneHist.setTitleX("#Delta#phi Plane Deuteron [deg.]");
     DeltaPhiPlaneMattHist = new H1F("DeltaPhiPlane",100,-100,100);
-    DeltaPhiPlaneMattHist.setTitle("Delta Phi Plane Hattawy");
+    DeltaPhiPlaneMattHist.setTitleX("#Delta#phi Plane #gamma* [deg.]");
 
 
     coneanglevsedgXM2 = new H2F("Cone Angle vs eDGammaX missing M2","Cone Angle vs eDGammaX missing M2",100,0,20,100,-2,2);
@@ -184,8 +184,8 @@ public class DvcsHisto {
     //pid histograms
     betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betacalcvsP = new H2F("BetaCalc vs P","BetaCalc vs P", 100,0,10.2,100,0,1.1);
-    deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
-    deltabeta.setTitle("Beta - BetaCalc");
+    deltabeta = new H1F("#Delta#beta","#Delta#beta",100,-0.6,0.2);
+    deltabeta.setTitleX("#beta - #beta_Calc");
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
     chisqHad=new H1F("Chi2Pid",100,0,10);
@@ -202,9 +202,10 @@ public class DvcsHisto {
 
     Phiplus = new H1F("Phiplus",10,0,360);
     Phiminus = new H1F("Phiminus",10,0,360);
-    thisto = new H1F("-t",100,0,20);
+    thisto = new H1F("-t","-t",100,0,4);
     thisto.setTitleX("-t [GeV/c]^2");
-    pPerphisto = new H1F("pPerp","pPerp",100,0,3);
+    pPerphisto = new H1F("pPerp",100,0,3);
+    pPerphisto.setTitleX("Transverse Momentum [GeV/c]");
     //System.out.println("creating histograms"  );
   }
   public void fillBasicHisto(DvcsEvent ev) {
@@ -260,7 +261,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
     helicityhisto.fill(ev.helicity);
     helicityrawhisto.fill(ev.helicityraw);
-    thisto.fill(ev.t().mass());
+    thisto.fill(-1*ev.t().mass2());
     pPerphisto.fill(ev.pPerp());
 
     if(ev.helicity==1){
@@ -289,9 +290,31 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
   Asym.setTitleY("A_LU(#phi)");
   return Asym;
  }
-  public void drawPlot(TCanvas ecP){
+  public void drawPlot1(TCanvas ecP){
     //ecP.getPad().getAxisZ().setLog(true);
-    this.drawAsym(ecP);
+    //this.buildAsym().setTitleX("#phi [deg.]");
+    //this.buildAsym().setTitleY("A_LU(#phi)");
+    ecP.draw(coneanglevsedXM2);
+  }
+  public void drawPlot2(TCanvas ecP){
+    //ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(edgXmissingM2);
+  }
+  public void drawPlot3(TCanvas ecP){
+    //ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(DeltaPhiPlaneHist);
+  }
+  public void drawPlot4(TCanvas ecP){
+    //ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(DeltaPhiPlaneMattHist);
+  }
+  public void drawPlot5(TCanvas ecP){
+    //ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(pPerphisto);
+  }
+  public void drawPlot6(TCanvas ecP){
+    ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(photThvsP);
   }
   public void drawAsym(TCanvas ecA){
   ecA.getPad().setAxisRange(0, 360, -0.6, 0.6);

@@ -237,7 +237,8 @@ public class DvcsEvent {
   }
   public LorentzVector t(){
     LorentzVector tmp = new LorentzVector();
-    tmp.copy(velectron);
+    tmp.copy(vphoton);
+    tmp.sub(velectron);
     tmp.sub(vBeam);
     return tmp;
   }
@@ -295,7 +296,7 @@ public class DvcsEvent {
   public boolean Exclusivitycut(){
     boolean cut=false;
     if (conf==1){
-      cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2) && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && -1*this.t().mass()<1 && this.pPerp()<0.5);
+      cut=(this.X("eh").mass2() < (-1.5* this.coneangle()+2) && this.X("eh").mass2() >-2  && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.25)) && this.X("ehg").e()<2 && this.pPerp()<0.5);
     }
     else if (conf==2){
       cut=(this.X("eh").mass2() < (-1* this.coneangle()+2) && this.X("eh").mass2()>-2 && ((this.beta()-this.BetaCalc()) > (0.05*this.chi2pid()-0.10)) && this.X("ehg").mass2()>-0.75 && this.X("ehg").e()<3 && this.pPerp()<0.5);
