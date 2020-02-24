@@ -61,9 +61,12 @@ public class DvcsHisto {
   public H2F coneanglevsedgXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehgX
   public H2F coneanglevsedXM2;//angle between gamma vector and missing hadron+e vector vs missin mass square ehX
   public H2F coneanglevsegXM2;
+  public H1F betahadhisto;
+  public H1F betacalchisto;
   public H2F betavsP ;
   public H2F betacalcvsP;
   public H1F deltabeta;
+
 
   public H2F ctofdedxvsp;
 
@@ -183,6 +186,10 @@ public class DvcsHisto {
 
     //pid histograms
     betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
+    betacalchisto = new H1F("#beta_calc","#beta_calc",100,0,1);
+    betacalchisto.setTitleX("#beta calculated from relativistic momentum");
+    betahadhisto = new H1F("#beta","#beta",100,0,1);
+    betacalchisto.setTitleX("Measured #beta");
     betacalcvsP = new H2F("BetaCalc vs P","BetaCalc vs P", 100,0,10.2,100,0,1.1);
     deltabeta = new H1F("Beta - BetaCalc",100,-0.6,0.2);
     deltabeta.setTitle("Beta - BetaCalc");
@@ -251,6 +258,8 @@ public class DvcsHisto {
 coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
     betavsP.fill(ev.vhadron.p(),ev.beta());
+    betahadhisto.fill(ev.beta());
+    betacalchisto.fill(ev.BetaCalc());
     betacalcvsP.fill(ev.vhadron.p(),ev.BetaCalc());
     deltabeta.fill(ev.beta()-ev.BetaCalc());
 
@@ -260,7 +269,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
     helicityhisto.fill(ev.helicity);
     helicityrawhisto.fill(ev.helicityraw);
-    thisto.fill(ev.t().mass());
+    thisto.fill(-1*ev.t().mass2());
     pPerphisto.fill(ev.pPerp());
 
     if(ev.helicity==1){
@@ -380,7 +389,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     //ec.cd(24).draw(coneanglevsegXM2);
 
     ec.cd(25).draw(betavsP);
-ec.getPad().getAxisZ().setLog(true);
+    //ec.getPad().getAxisZ().setLog(true);
     ec.cd(22).draw(betacalcvsP);
     //ec.cd(22).draw(deltabeta);
     ec.cd(23).draw(ctofdedxvsp);
@@ -388,7 +397,8 @@ ec.getPad().getAxisZ().setLog(true);
     //ec.cd(25).draw(helicityrawhisto);
     ec.cd(26).draw(thisto);
     ec.cd(27).draw(pPerphisto);
-    ec.cd(28).draw(hadmom);
+    ec.cd(28).draw(betacalchisto);
+    ec.cd(29).draw(betahadhisto);
 
     ec.getCanvas().getScreenShot();
     ec.getCanvas().save(ec.getTitle()+".png");
