@@ -119,15 +119,15 @@ public class DcoDe
     TCanvas ec5 = new TCanvas("Excl after DVCS and exc cuts",1500,1500);
     hAC.DrawMissing(ec5);
 
-  /*  TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
+    TCanvas ec6 = new TCanvas("AllNoCuts",1200,1000);
     hNC.DrawAll(ec6);
     TCanvas ec7 = new TCanvas("AllDVCSCuts",1200,1000);
-    hDC.DrawAll(ec7);*/
+    hDC.DrawAll(ec7);
     TCanvas ec8 = new TCanvas("AllDVCSexcCuts",1200,1000);
     hAC.DrawAll(ec8);
 
-    /*TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
-    hNC.DrawAll2(ec9);*/
+    TCanvas ec9 = new TCanvas("AllNoCuts",1200,1000);
+    hNC.DrawAll2(ec9);
     TCanvas ec10 = new TCanvas("AllDVCSCuts",1200,1000);
     hDC.DrawAll2(ec10);
     TCanvas ec11 = new TCanvas("AllDVCSexcCuts",1200,1000);
@@ -136,25 +136,25 @@ public class DcoDe
     TCanvas ecA = new TCanvas("Asymmetry",1200,1200);
     hAC.drawAsym(ecA);
 
-    TCanvas ecP = new TCanvas("Plotdvcscuts",1800,1200);
+    /*TCanvas ecP = new TCanvas("Plotdvcscuts",1800,1200);
     ecP.divide(2,1);
     ecP.cd(0);
     hDC.drawPlot1(ecP);
     ecP.cd(1);
     hAC.drawPlot1(ecP);
-    /*ecP.cd(2);
+    ecP.cd(2);
     hDC.drawPlot3(ecP);
     ecP.cd(3);
     hDC.drawPlot4(ecP);
     ecP.cd(4);
-    hDC.drawPlot5(ecP);*/
+    hDC.drawPlot5(ecP);
     //ecP.cd(5);
     //hDC.drawPlot6(ecP);
 
 
 
 
-    /*TCanvas ecP2 = new TCanvas("Plotallcuts",900,9000);
+    TCanvas ecP2 = new TCanvas("Plotallcuts",900,9000);
     ecP2.divide(1,2);
     ecP2.cd(0);
     hAC.drawPlot1(ecP2);

@@ -195,10 +195,10 @@ public class DvcsHisto {
     deltabeta.setTitleX("#beta - #beta_Calc");
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
-    chisqHad=new H1F("Chi2Pid",100,0,10);
+    chisqHad=new H1F("Chi2Pid",100,-5,5);
     chisqHad.setTitle("ChiSquared PID");
 
-    chi2vsdeltabeta=new H2F("#chi^2_PID vs #Delta#beta_d","#chi^2_PID vs #Delta#beta_d",100,0,30,100,-0.6,0.02);
+    chi2vsdeltabeta=new H2F("#chi^2_PID vs #Delta#beta_d","#chi^2_PID vs #Delta#beta_d",100,-30,30,100,-0.6,0.6);
     chi2vsdeltabeta.setTitleX("#chi^2_PID");
     chi2vsdeltabeta.setTitleY("#Delta#beta_d");
 
@@ -399,7 +399,9 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(12).draw(ThvsPhi);
     ec.cd(13).draw(hgTh);
     ec.cd(14).draw(hgEn);
-    ec.cd(15).draw(chi2vsdeltabeta);
+    ec.cd(15);
+    ec.getPad().getAxisZ().setLog(true);
+ec.draw(chi2vsdeltabeta);
     ec.cd(16).draw(ConeAngleHist);
     ec.cd(17).draw(MissThetaHist);
     //ec.getPad(1).getAxisZ().setLog(true);
@@ -418,8 +420,8 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(23).draw(ctofdedxvsp);
     ec.cd(24).draw(helicityhisto);
     //ec.cd(25).draw(helicityrawhisto);
-    ec.cd(26).draw(thisto);
-    ec.cd(27).draw(pPerphisto);
+    ec.cd(26).draw(deltabeta);
+    ec.cd(27).draw(chisqHad);
     ec.cd(28).draw(betacalchisto);
     ec.cd(29).draw(betahadhisto);
 
