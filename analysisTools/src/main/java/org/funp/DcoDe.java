@@ -136,15 +136,30 @@ public class DcoDe
     TCanvas ecA = new TCanvas("Asymmetry",1200,1200);
     hAC.drawAsym(ecA);
 
-    /*TCanvas ecP1 = new TCanvas("Plotnocuts",1200,1200);
-    //hNC.drawPlot1(ecP);
-    hNC.drawPlot(ecP1);
+    /*TCanvas ecP = new TCanvas("Plotdvcscuts",1800,1200);
+    ecP.divide(2,1);
+    ecP.cd(0);
+    hDC.drawPlot1(ecP);
+    ecP.cd(1);
+    hAC.drawPlot1(ecP);
+    ecP.cd(2);
+    hDC.drawPlot3(ecP);
+    ecP.cd(3);
+    hDC.drawPlot4(ecP);
+    ecP.cd(4);
+    hDC.drawPlot5(ecP);
+    //ecP.cd(5);
+    //hDC.drawPlot6(ecP);
 
 
 
-    TCanvas ecP2 = new TCanvas("Plotdvcscuts",1200,1200);
-    //hNC.drawPlot1(ecP);
-    hDC.drawPlot(ecP2);
+
+    TCanvas ecP2 = new TCanvas("Plotallcuts",900,9000);
+    ecP2.divide(1,2);
+    ecP2.cd(0);
+    hAC.drawPlot1(ecP2);
+    ecP2.cd(1);
+    hAC.drawPlot2(ecP2);
 
 
 

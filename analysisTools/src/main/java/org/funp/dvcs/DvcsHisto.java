@@ -395,7 +395,7 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     ec.cd(23).draw(ctofdedxvsp);
     ec.cd(24).draw(helicityhisto);
     //ec.cd(25).draw(helicityrawhisto);
-    ec.cd(26).draw(thisto);
+    ec.cd(26).draw(delta);
     ec.cd(27).draw(chisqHad);
     ec.cd(28).draw(betacalchisto);
     ec.cd(29).draw(betahadhisto);
