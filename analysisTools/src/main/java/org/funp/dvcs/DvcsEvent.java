@@ -55,7 +55,9 @@ public class DvcsEvent {
   boolean FoundPositives = false;
   //boolean NewEvent=false;
   double betahad=-10;
+  double betapos=-10;
   double ctofenergyhad=-10;
+  double ctofenergypos=-10;
   double chi2pidhad=-10;
   public int tmpdeutctof=0;
   public int tmpdeut=0;
@@ -123,12 +125,11 @@ public class DvcsEvent {
     }
   }
   public void setPositives(Bank particles, Bank scint, int np){
-    Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
     vpositive.setPxPyPzM(particles.getFloat("px",np),
     particles.getFloat("py",np),
     particles.getFloat("pz",np),
-    mpos);
-
+    this.MNUC);
+    betapos=particles.getFloat("beta",np);
   }
   public void setHelicity(Bank hel){
     helicity = hel.getInt("helicity", 0);
@@ -234,10 +235,12 @@ public class DvcsEvent {
   }
 
   public boolean FilterPositives(Bank particles, Bank scint){
+    Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
+
     LorentzVector  vtmp = new LorentzVector();
     double mpos;
+    double ctofenpos=-10;
     FoundPositives = false;
-
 
     if(particles.getRows()>0){
       for(int npart=0; npart<particles.getRows(); npart++){
@@ -246,7 +249,19 @@ public class DvcsEvent {
         float beta = particles.getFloat("beta", npart);
         int charge = particles.getInt("charge",npart);
 
-        if(charge >= 0){
+        if(scintMap.get(npart)!=null){
+          for (int iscint : scintMap.get(npart)) {
+            //System.out.println(scintMap.get(nh));
+            final byte layer = scint.getByte("layer",iscint);
+            final byte detector = scint.getByte("detector",iscint);
+            //System.out.println(detector);
+            if(detector==4){
+              ctofenergypos = scint.getFloat("energy",iscint);
+            }
+          }
+        }
+
+        if(charge >= 0 && pid==45){
           FoundPositives = true;
           npositives++;
           np = npart;
@@ -439,8 +454,14 @@ if(leptonicPlane.dot(vphoton.vect()) < 0){
   public double beta(){
     return betahad;
   }
+  public double betapos(){
+    return betapos;
+  }
   public double ctofen(){
     return ctofenergyhad;
+  }
+  public double ctofenpos(){
+    return ctofenergypos;
   }
   public double chi2pid(){
     return chi2pidhad;

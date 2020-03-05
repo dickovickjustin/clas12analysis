@@ -64,11 +64,13 @@ public class DvcsHisto {
   public H1F betahadhisto;
   public H1F betacalchisto;
   public H2F betavsP ;
+  public H2F betavsPplus;
   public H2F betacalcvsP;
   public H1F deltabeta;
 
 
   public H2F ctofdedxvsp;
+  public H2F ctofdedxvspplus;
 
   public H1F chisqHad;
 
@@ -186,6 +188,7 @@ public class DvcsHisto {
 
     //pid histograms
     betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
+    betavsPplus = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betacalchisto = new H1F("#beta_calc","#beta_calc",100,0,1);
     betacalchisto.setTitleX("#beta calculated from relativistic momentum");
     betahadhisto = new H1F("#beta","#beta",100,0,1);
@@ -195,6 +198,7 @@ public class DvcsHisto {
     deltabeta.setTitleX("#beta - #beta_Calc");
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    ctofdedxvspplus=new H2F("CTOF energy vs p",100,0,2,100,0,100);
     chisqHad=new H1F("Chi2Pid",100,-5,5);
     chisqHad.setTitle("ChiSquared PID");
 
@@ -282,6 +286,19 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
 
 
   }
+
+  public void fillPositives(DvcsEvent ev){
+    betavsPplus.fill(ev.vpositive.p(),ev.betapos());
+    ctofdedxvspplus.fill(ev.vpositive.p(),ev.ctofenpos());
+
+  }
+
+  public void drawPositives(TCanvas ecP){
+    ecP.divide(2,1);
+    ecP.cd(0).draw(betavsPplus);
+    ecP.cd(1).draw(ctofdedxvspplus);
+  }
+
   public H1F buildAsym(){
   H1F num;
   H1F denom;
