@@ -65,6 +65,7 @@ public class DvcsHisto {
   public H1F betacalchisto;
   public H2F betavsP;
   public H2F betavsPdeut;
+  public H2F betavsPprot;
   public H2F betavsPpion;
   public H2F betavsPkaon;
   public H2F betavsPplus;
@@ -193,6 +194,7 @@ public class DvcsHisto {
     betavsP = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betavsPplus = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betavsPdeut = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
+    betavsPprot = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betavsPpion = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betavsPkaon = new H2F("Beta vs P","Beta vs P", 100,0,10.2,100,0,1.1);
     betacalchisto = new H1F("#beta_calc","#beta_calc",100,0,1);
@@ -295,26 +297,35 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
   public void fillPositives(DvcsEvent ev){
     betavsPplus.fill(ev.vpositive.p(),ev.betapos());
     ctofdedxvspplus.fill(ev.vpositive.p(),ev.ctofenpos());
-    if (ev.mpos==ev.MNUC){
-      betavsPdeut.fill(ev.vpositive.p(),ev.betapos());
+    //if (ev.FoundDeuteron==true){
+      betavsPdeut.fill(ev.vdeuteron.p(),ev.betadeut);
       betavsPdeut.setTitle("Beta vs Momentum Deuteron");
-    }
-    else if (ev.mpos==ev.MPION){
-      betavsPpion.fill(ev.vpositive.p(),ev.betapos());
+    //}
+    //else if (ev.FoundProton==true){
+      betavsPprot.fill(ev.vproton.p(),ev.betaprot);
+      betavsPprot.setTitle("Beta vs Momentum Proton");
+    //}
+    //else if (ev.FoundPion==true){
+      betavsPpion.fill(ev.vpion.p(),ev.betapion);
       betavsPpion.setTitle("Beta vs Momentum #pi+");
-    }
-    else if (ev.mpos==ev.MKAON){
-      betavsPkaon.fill(ev.vpositive.p(),ev.betapos());
+    //}
+    //else if (ev.FoundKaon==true){
+      betavsPkaon.fill(ev.vkaon.p(),ev.betakaon);
       betavsPkaon.setTitle("Beta vs Momentum #kappa");
-    }
+    //}
   }
 
   public void drawPositives(TCanvas ecP){
-    ecP.divide(2,2);
-    ecP.cd(0).draw(betavsPplus);
-    ecP.cd(1).draw(betavsPdeut);
+    //ecP.divide(2,2);
+    betavsPplus.add(betavsPprot);
+    betavsPplus.add(betavsPdeut);
+    betavsPplus.add(betavsPpion);
+    betavsPplus.add(betavsPkaon);
+    ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(betavsPplus);
+    /*ecP.cd(1).draw(betavsPdeut);
     ecP.cd(2).draw(betavsPpion);
-    ecP.cd(3).draw(betavsPkaon);
+    ecP.cd(3).draw(betavsPkaon);*/
     //ecP.cd(1).draw(ctofdedxvspplus);
   }
 
