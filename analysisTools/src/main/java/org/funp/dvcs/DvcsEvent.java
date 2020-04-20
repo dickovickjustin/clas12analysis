@@ -292,17 +292,6 @@ public class DvcsEvent {
         float beta = particles.getFloat("beta", npart);
         int charge = particles.getInt("charge",npart);
 
-        if(scintMap.get(npart)!=null){
-          for (int iscint : scintMap.get(npart)) {
-            //System.out.println(scintMap.get(nh));
-            final byte layer = scint.getByte("layer",iscint);
-            final byte detector = scint.getByte("detector",iscint);
-            //System.out.println(detector);
-            if(detector==4){
-              ctofenergypos = scint.getFloat("energy",iscint);
-            }
-          }
-        }
 
         if(charge >= 0){
           FoundPositives = true;
@@ -330,6 +319,29 @@ public class DvcsEvent {
             FoundProton = true;
           }
           this.setPositives(particles,scint,np);
+        }
+
+        if(scintMap.get(npart)!=null){
+          for (int iscint : scintMap.get(npart)) {
+            //System.out.println(scintMap.get(nh));
+            final byte layer = scint.getByte("layer",iscint);
+            final byte detector = scint.getByte("detector",iscint);
+            //System.out.println(detector);
+            if(detector==4){
+              if(FoundDeuteron==true){
+                ctofenergydeut = scint.getFloat("energy",iscint);
+              }
+              if (FoundKaon==true){
+                ctofenergykaon = scint.getFloat("energy",iscint);
+              }
+              if (FoundProton==true){
+                ctofenergyprot = scint.getFloat("energy",iscint);
+              }
+              if (FoundPion==true){
+                ctofenergypion = scint.getFloat("energy",iscint);
+              }
+            }
+          }
         }
       }
     }

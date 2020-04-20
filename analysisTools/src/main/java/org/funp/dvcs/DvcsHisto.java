@@ -75,6 +75,10 @@ public class DvcsHisto {
 
   public H2F ctofdedxvsp;
   public H2F ctofdedxvspplus;
+  public H2F ctofdedxvspdeut;
+  public H2F ctofdedxvspprot;
+  public H2F ctofdedxvsppion;
+  public H2F ctofdedxvspkaon;
 
   public H1F chisqHad;
 
@@ -207,6 +211,10 @@ public class DvcsHisto {
 
     ctofdedxvsp=new H2F("CTOF energy vs p",100,0,2,100,0,100);
     ctofdedxvspplus=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    ctofdedxvspdeut=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    ctofdedxvspprot=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    ctofdedxvsppion=new H2F("CTOF energy vs p",100,0,2,100,0,100);
+    ctofdedxvspkaon=new H2F("CTOF energy vs p",100,0,2,100,0,100);
     chisqHad=new H1F("Chi2Pid",100,-5,5);
     chisqHad.setTitle("ChiSquared PID");
 
@@ -295,38 +303,46 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
   }
 
   public void fillPositives(DvcsEvent ev){
-    betavsPplus.fill(ev.vpositive.p(),ev.betapos());
-    ctofdedxvspplus.fill(ev.vpositive.p(),ev.ctofenpos());
+    //betavsPplus.fill(ev.vpositive.p(),ev.betapos());
+    //ctofdedxvspplus.fill(ev.vpositive.p(),ev.ctofenpos());
     //if (ev.FoundDeuteron==true){
       betavsPdeut.fill(ev.vdeuteron.p(),ev.betadeut);
       betavsPdeut.setTitle("Beta vs Momentum Deuteron");
+      ctofdedxvspdeut.fill(ev.vdeuteron.p(),ev.ctofenergydeut);
+      ctofdedxvspdeut.setTitle("dE/dx vs Momentum Deuteron");
     //}
     //else if (ev.FoundProton==true){
       betavsPprot.fill(ev.vproton.p(),ev.betaprot);
       betavsPprot.setTitle("Beta vs Momentum Proton");
+      ctofdedxvspdeut.fill(ev.vproton.p(),ev.ctofenergyprot);
+      ctofdedxvspdeut.setTitle("dE/dx vs Momentum Proton");
     //}
     //else if (ev.FoundPion==true){
       betavsPpion.fill(ev.vpion.p(),ev.betapion);
       betavsPpion.setTitle("Beta vs Momentum #pi+");
+      ctofdedxvspdeut.fill(ev.vpion.p(),ev.ctofenergypion);
+      ctofdedxvspdeut.setTitle("dE/dx vs Momentum #pi+");
     //}
     //else if (ev.FoundKaon==true){
       betavsPkaon.fill(ev.vkaon.p(),ev.betakaon);
       betavsPkaon.setTitle("Beta vs Momentum #kappa");
+      ctofdedxvspdeut.fill(ev.vkaon.p(),ev.ctofenergykaon);
+      ctofdedxvspdeut.setTitle("dE/dx vs Momentum #kappa");
     //}
   }
 
   public void drawPositives(TCanvas ecP){
-    //ecP.divide(2,2);
-    betavsPplus.add(betavsPprot);
+    ecP.divide(2,2);
+    /*betavsPplus.add(betavsPprot);
     betavsPplus.add(betavsPdeut);
     betavsPplus.add(betavsPpion);
     betavsPplus.add(betavsPkaon);
-    ecP.getPad().getAxisZ().setLog(true);
-    ecP.draw(betavsPplus);
-    /*ecP.cd(1).draw(betavsPdeut);
+    //ecP.getPad().getAxisZ().setLog(true);
+    ecP.draw(betavsPplus);*/
+    ecP.cd(0).draw(betavsPdeut);
+    ecP.cd(1).draw(betavsPprot);
     ecP.cd(2).draw(betavsPpion);
-    ecP.cd(3).draw(betavsPkaon);*/
-    //ecP.cd(1).draw(ctofdedxvspplus);
+    ecP.cd(3).draw(betavsPkaon);
   }
 
   public H1F buildAsym(){
