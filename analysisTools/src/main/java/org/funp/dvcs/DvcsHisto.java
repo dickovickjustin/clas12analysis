@@ -314,35 +314,41 @@ coneanglevsegXM2.fill(ev.coneangle(),ev.X("eg").mass2());
     //else if (ev.FoundProton==true){
       betavsPprot.fill(ev.vproton.p(),ev.betaprot);
       betavsPprot.setTitle("Beta vs Momentum Proton");
-      ctofdedxvspdeut.fill(ev.vproton.p(),ev.ctofenergyprot);
-      ctofdedxvspdeut.setTitle("dE/dx vs Momentum Proton");
+      ctofdedxvspprot.fill(ev.vproton.p(),ev.ctofenergyprot);
+      ctofdedxvspprot.setTitle("dE/dx vs Momentum Proton");
     //}
     //else if (ev.FoundPion==true){
       betavsPpion.fill(ev.vpion.p(),ev.betapion);
       betavsPpion.setTitle("Beta vs Momentum #pi+");
-      ctofdedxvspdeut.fill(ev.vpion.p(),ev.ctofenergypion);
-      ctofdedxvspdeut.setTitle("dE/dx vs Momentum #pi+");
+      ctofdedxvsppion.fill(ev.vpion.p(),ev.ctofenergypion);
+      ctofdedxvsppion.setTitle("dE/dx vs Momentum #pi+");
     //}
     //else if (ev.FoundKaon==true){
       betavsPkaon.fill(ev.vkaon.p(),ev.betakaon);
       betavsPkaon.setTitle("Beta vs Momentum #kappa");
-      ctofdedxvspdeut.fill(ev.vkaon.p(),ev.ctofenergykaon);
-      ctofdedxvspdeut.setTitle("dE/dx vs Momentum #kappa");
+      ctofdedxvspkaon.fill(ev.vkaon.p(),ev.ctofenergykaon);
+      ctofdedxvspkaon.setTitle("dE/dx vs Momentum #kappa");
     //}
   }
 
   public void drawPositives(TCanvas ecP){
-    ecP.divide(2,2);
+    ecP.divide(2,3);
     /*betavsPplus.add(betavsPprot);
     betavsPplus.add(betavsPdeut);
     betavsPplus.add(betavsPpion);
     betavsPplus.add(betavsPkaon);
     //ecP.getPad().getAxisZ().setLog(true);
     ecP.draw(betavsPplus);*/
-    ecP.cd(0).draw(betavsPdeut);
-    ecP.cd(1).draw(betavsPprot);
-    ecP.cd(2).draw(betavsPpion);
-    ecP.cd(3).draw(betavsPkaon);
+    ctofdedxvspplus.add(ctofdedxvspdeut);
+    ctofdedxvspplus.add(ctofdedxvspprot);
+    ctofdedxvspplus.add(ctofdedxvsppion);
+    ctofdedxvspplus.add(ctofdedxvspkaon);
+    ecP.cd(0).draw(ctofdedxvspdeut);
+    ecP.cd(1).draw(ctofdedxvspprot);
+    ecP.cd(2).draw(ctofdedxvsppion);
+    ecP.cd(3).draw(ctofdedxvspkaon);
+    ecP.cd(4).draw(ctofdedxvspplus);
+    ecP.getPad().getAxisZ().setLog(true);
   }
 
   public H1F buildAsym(){

@@ -145,13 +145,14 @@ public class DvcsEvent {
       }
     }
   }
-  public void setPositives(Bank particles, Bank scint, int np){
+  public void setPositives(Bank particles, double ctofen, int np){
     if (this.FoundDeuteron==true){
     vdeuteron.setPxPyPzM(particles.getFloat("px",np),
     particles.getFloat("py",np),
     particles.getFloat("pz",np),
     this.MNUC);
     betadeut=particles.getFloat("beta",np);
+    ctofenergydeut = ctofen;
   }
   else if (this.FoundProton==true){
     vproton.setPxPyPzM(particles.getFloat("px",np),
@@ -159,6 +160,7 @@ public class DvcsEvent {
     particles.getFloat("pz",np),
     this.MPROT);
     betaprot=particles.getFloat("beta",np);
+    ctofenergyprot = ctofen;
   }
   else if (this.FoundPion==true){
     vpion.setPxPyPzM(particles.getFloat("px",np),
@@ -166,6 +168,7 @@ public class DvcsEvent {
     particles.getFloat("pz",np),
     this.MPION);
     betapion=particles.getFloat("beta",np);
+    ctofenergypion = ctofen;
   }
   else if (this.FoundKaon==true){
     vkaon.setPxPyPzM(particles.getFloat("px",np),
@@ -173,6 +176,7 @@ public class DvcsEvent {
     particles.getFloat("pz",np),
     this.MKAON);
     betakaon=particles.getFloat("beta",np);
+    ctofenergykaon = ctofen;
   }
 }
   public void setHelicity(Bank hel){
@@ -282,7 +286,11 @@ public class DvcsEvent {
     Map<Integer,List<Integer>> scintMap = loadMapByIndex(scint,"pindex");
 
     LorentzVector  vtmp = new LorentzVector();
-    double ctofenpos=-10;
+    ctofenergypos=-10;
+    ctofenergydeut=-10;
+    ctofenergykaon=-10;
+    ctofenergypion=-10;
+    ctofenergyprot=-10;
     FoundPositives = false;
 
     if(particles.getRows()>0){
@@ -292,6 +300,17 @@ public class DvcsEvent {
         float beta = particles.getFloat("beta", npart);
         int charge = particles.getInt("charge",npart);
 
+        if(scintMap.get(npart)!=null){
+          for (int iscint : scintMap.get(npart)) {
+            //System.out.println(scintMap.get(nh));
+            final byte layer = scint.getByte("layer",iscint);
+            final byte detector = scint.getByte("detector",iscint);
+            //System.out.println(detector);
+            if(detector==3){
+              ctofenergypos = scint.getFloat("energy",iscint);
+            }
+          }
+        }
 
         if(charge >= 0){
           FoundPositives = true;
@@ -318,30 +337,7 @@ public class DvcsEvent {
             mpos = this.MPROT;
             FoundProton = true;
           }
-          this.setPositives(particles,scint,np);
-        }
-
-        if(scintMap.get(npart)!=null){
-          for (int iscint : scintMap.get(npart)) {
-            //System.out.println(scintMap.get(nh));
-            final byte layer = scint.getByte("layer",iscint);
-            final byte detector = scint.getByte("detector",iscint);
-            //System.out.println(detector);
-            if(detector==4){
-              if(FoundDeuteron==true){
-                ctofenergydeut = scint.getFloat("energy",iscint);
-              }
-              if (FoundKaon==true){
-                ctofenergykaon = scint.getFloat("energy",iscint);
-              }
-              if (FoundProton==true){
-                ctofenergyprot = scint.getFloat("energy",iscint);
-              }
-              if (FoundPion==true){
-                ctofenergypion = scint.getFloat("energy",iscint);
-              }
-            }
-          }
+          this.setPositives(particles, ctofenergypos, np);
         }
       }
     }
